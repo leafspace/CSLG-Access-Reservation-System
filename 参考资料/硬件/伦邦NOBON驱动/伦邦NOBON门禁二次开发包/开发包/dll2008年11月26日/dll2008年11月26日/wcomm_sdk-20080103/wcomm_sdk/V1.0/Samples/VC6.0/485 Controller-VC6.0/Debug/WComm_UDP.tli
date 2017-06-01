@@ -1,0 +1,196 @@
+// Created by Microsoft (R) C/C++ Compiler Version 12.00.8168.0 (b300ae20).
+//
+// c:\documents and settings\wg\×ÀÃæ\wcomm_sdk\v1.0\samples\vc6.0\485 controller-vc6.0\debug\WComm_UDP.tli
+//
+// Wrapper implementations for Win32 type library ..\..\..\bin\WComm_UDP.tlb
+// compiler-generated file created 12/24/07 at 17:12:23 - DO NOT EDIT!
+
+#pragma once
+
+//
+// interface IWCOMM_WATCH wrapper method implementations
+//
+
+inline __int64 IWCOMM_WATCH::start ( long ipPort ) {
+    __int64 _result;
+    HRESULT _hr = raw_start(ipPort, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline __int64 IWCOMM_WATCH::close ( ) {
+    __int64 _result;
+    HRESULT _hr = raw_close(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _bstr_t IWCOMM_WATCH::getdata ( ) {
+    BSTR _result;
+    HRESULT _hr = raw_getdata(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline __int64 IWCOMM_WATCH::GetErrCode ( ) {
+    __int64 _result;
+    HRESULT _hr = get_ErrCode(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _bstr_t IWCOMM_WATCH::GetErrMessage ( ) {
+    BSTR _result;
+    HRESULT _hr = get_ErrMessage(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+//
+// interface IWCOMM_OPERATE wrapper method implementations
+//
+
+inline _bstr_t IWCOMM_OPERATE::udp_comm ( _bstr_t commandString, _bstr_t ipAddr, long ipPort ) {
+    BSTR _result;
+    HRESULT _hr = raw_udp_comm(commandString, ipAddr, ipPort, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t IWCOMM_OPERATE::CreateBstrCommand ( __int64 controllerSN, _bstr_t strFuncData ) {
+    BSTR _result;
+    HRESULT _hr = raw_CreateBstrCommand(controllerSN, strFuncData, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t IWCOMM_OPERATE::CreateBstrCommandOfAdjustClockByPCTime ( __int64 controllerSN ) {
+    BSTR _result;
+    HRESULT _hr = raw_CreateBstrCommandOfAdjustClockByPCTime(controllerSN, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t IWCOMM_OPERATE::GetSwipeDateFromRunInfo ( _bstr_t strRunInfo, __int64 * cardId, __int64 * status ) {
+    BSTR _result;
+    HRESULT _hr = raw_GetSwipeDateFromRunInfo(strRunInfo, cardId, status, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t IWCOMM_OPERATE::MSDateYmdToWCDateYmd ( _bstr_t strMSDateYmd ) {
+    BSTR _result;
+    HRESULT _hr = raw_MSDateYmdToWCDateYmd(strMSDateYmd, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t IWCOMM_OPERATE::MSDateHmsToWCDateHms ( _bstr_t strMSDateHms ) {
+    BSTR _result;
+    HRESULT _hr = raw_MSDateHmsToWCDateHms(strMSDateHms, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline _bstr_t IWCOMM_OPERATE::WCDateToMSDate ( _bstr_t strWCDate ) {
+    BSTR _result;
+    HRESULT _hr = raw_WCDateToMSDate(strWCDate, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline __int64 IWCOMM_OPERATE::GetSNFromRunInfo ( _bstr_t strRunInfo ) {
+    __int64 _result;
+    HRESULT _hr = raw_GetSNFromRunInfo(strRunInfo, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _bstr_t IWCOMM_OPERATE::GetClockTimeFromRunInfo ( _bstr_t strRunInfo ) {
+    BSTR _result;
+    HRESULT _hr = raw_GetClockTimeFromRunInfo(strRunInfo, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline __int64 IWCOMM_OPERATE::GetCardRecordCountFromRunInfo ( _bstr_t strRunInfo ) {
+    __int64 _result;
+    HRESULT _hr = raw_GetCardRecordCountFromRunInfo(strRunInfo, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline __int64 IWCOMM_OPERATE::GetPrivilegeNumFromRunInfo ( _bstr_t strRunInfo ) {
+    __int64 _result;
+    HRESULT _hr = raw_GetPrivilegeNumFromRunInfo(strRunInfo, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline __int64 IWCOMM_OPERATE::GetDoorStatusFromRunInfo ( _bstr_t strRunInfo, __int64 lngDoorNo ) {
+    __int64 _result;
+    HRESULT _hr = raw_GetDoorStatusFromRunInfo(strRunInfo, lngDoorNo, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline __int64 IWCOMM_OPERATE::GetButtonStatusFromRunInfo ( _bstr_t strRunInfo, __int64 lngDoorNo ) {
+    __int64 _result;
+    HRESULT _hr = raw_GetButtonStatusFromRunInfo(strRunInfo, lngDoorNo, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline __int64 IWCOMM_OPERATE::GetErrorNoFromRunInfo ( _bstr_t strRunInfo ) {
+    __int64 _result;
+    HRESULT _hr = raw_GetErrorNoFromRunInfo(strRunInfo, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _bstr_t IWCOMM_OPERATE::NumToStrHex ( __int64 num, __int64 Len ) {
+    BSTR _result;
+    HRESULT _hr = raw_NumToStrHex(num, Len, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline __int64 IWCOMM_OPERATE::StrHexToNum ( _bstr_t strHex ) {
+    __int64 _result;
+    HRESULT _hr = raw_StrHexToNum(strHex, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _bstr_t IWCOMM_OPERATE::CardToStrHex ( __int64 cardId ) {
+    BSTR _result;
+    HRESULT _hr = raw_CardToStrHex(cardId, &_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline __int64 IWCOMM_OPERATE::GetErrCode ( ) {
+    __int64 _result;
+    HRESULT _hr = get_ErrCode(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline _bstr_t IWCOMM_OPERATE::GetErrMessage ( ) {
+    BSTR _result;
+    HRESULT _hr = get_ErrMessage(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _bstr_t(_result, false);
+}
+
+inline __int64 IWCOMM_OPERATE::GetminUDPWaitTimeout ( ) {
+    __int64 _result;
+    HRESULT _hr = get_minUDPWaitTimeout(&_result);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+    return _result;
+}
+
+inline void IWCOMM_OPERATE::PutminUDPWaitTimeout ( __int64 pRetVal ) {
+    HRESULT _hr = put_minUDPWaitTimeout(pRetVal);
+    if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}

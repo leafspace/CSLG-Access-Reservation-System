@@ -1,0 +1,129 @@
+[Version]
+LayoutFile=Layout.inf, Layout1.inf, Layout2.inf
+signature="$CHICAGO$"
+Class=Media
+ClassGUID={4d36e96c-e325-11ce-bfc1-08002be10318}
+Provider=%Msft%
+
+; F i l e   c o p y i n g   s e c t i o n s (where the files go to).
+
+[DestinationDirs]
+btxbar01.CopyDrivers=10,system32\drivers  ; eg.  \windows\system32\drivers
+
+[Manufacturer]
+%MS%=MS
+
+; =================== Generic ==================================
+
+[MS]
+%btxbar01.DeviceDesc%=btxbar01,STREAM\btxbar01
+
+[btxbar01]
+Include  =  ks.inf, kscaptur.inf
+Needs    =  KS.Registration,KSCAPTUR.Registration.NT
+AddReg   =  btxbar01.addreg
+DelReg   =	btxbar01.DelReg
+CopyFiles=  btxbar01.CopyDrivers
+KnownFiles= btxbar01.KnownFiles
+Reboot
+
+[btxbar01.CopyDrivers]
+btxbar01.sys
+stream.sys
+
+[btxbar01.KnownFiles]
+btxbar01.sys=safe
+
+[btxbar01.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,btxbar01.sys
+HKR,,PageOutWhenUnopened,3,01
+HKR,"DriverData","LastVideoSource",0x00010001, 0x01,0x00,0x00,0x00
+HKR,"DriverData","LastAudioSource",0x00010001, 0xff,0xff,0xff,0xff
+
+;video svideo
+HKR,"DriverData\InPin0","PinType",0x00010001, 0x03,0x00,0x00,0x00
+HKR,"DriverData\InPin0","RelatedPinIndex",0x00010001, 0x04,0x00,0x00,0x00
+HKR,"DriverData\InPin0","Medium",,%GUID_NULL%
+
+;video tuner
+HKR,"DriverData\InPin1","PinType",0x00010001, 0x01,0x00,0x00,0x00
+HKR,"DriverData\InPin1","RelatedPinIndex",0x00010001, 0x03,0x00,0x00,0x00
+HKR,"DriverData\InPin1","Medium",,%GUID_0%
+
+;video composite
+HKR,"DriverData\InPin2","PinType",0x00010001, 0x02,0x00,0x00,0x00
+HKR,"DriverData\InPin2","RelatedPinIndex",0x00010001, 0x04,0x00,0x00,0x00
+HKR,"DriverData\InPin2","Medium",,%GUID_NULL%
+
+;audio tuner
+HKR,"DriverData\InPin3","PinType",0x00010001, 0x00,0x10,0x00,0x00
+HKR,"DriverData\InPin3","RelatedPinIndex",0x00010001, 0x01,0x00,0x00,0x00
+HKR,"DriverData\InPin3","Medium",,%GUID_3%
+
+;audio line
+HKR,"DriverData\InPin4","PinType",0x00010001, 0x01,0x10,0x00,0x00
+HKR,"DriverData\InPin4","RelatedPinIndex",0x00010001, 0x02,0x00,0x00,0x00
+HKR,"DriverData\InPin4","Medium",,%GUID_5%
+
+;video video decoder
+HKR,"DriverData\OutPin0","PinType",0x00010001, 0x0C,0x00,0x00,0x00
+HKR,"DriverData\OutPin0","RelatedPinIndex",0x00010001, 0x01,0x00,0x00,0x00
+HKR,"DriverData\OutPin0","Medium",,%GUID_4%
+
+;audio audio decoder
+HKR,"DriverData\OutPin1","PinType",0x00010001, 0x09,0x10,0x00,0x00
+HKR,"DriverData\OutPin1","RelatedPinIndex",0x00010001, 0x00,0x00,0x00,0x00
+HKR,"DriverData\OutPin1","Medium",,%GUID_NULL%
+
+[btxbar01.DelReg]
+HKR,,DevLoader
+HKR,,NTMPDriver
+HKR,,PageOutWhenUnopened
+HKR,"DriverData"
+
+[btxbar01.Interfaces]
+AddInterface={a799a801-a46d-11d0-a18c-00a02401dcd4},"GLOBAL",Crossbar,
+
+[Crossbar]
+AddReg=Crossbar.AddReg
+DelReg=Crossbar.DelReg
+
+[Crossbar.AddReg]
+HKR,,CLSID,,{71F96460-78F3-11d0-A18C-00A0C9118956}
+HKR,,FriendlyName,,%btxbar01.Crossbar%
+
+[Crossbar.DelReg]
+HKR,,CLSID
+HKR,,FriendlyName
+
+[btxbar01.Services]
+AddService = btxbar01,0x00000002,btxbar01.ServiceInstall
+
+[btxbar01.ServiceInstall]
+DisplayName   = %btxbar01.DeviceDesc%
+ServiceType   = %SERVICE_KERNEL_DRIVER%
+StartType     = %SERVICE_AUTO_START%
+ErrorControl  = %SERVICE_ERROR_NORMAL%
+ServiceBinary = %10%\system32\drivers\btxbar01.sys
+
+[Strings]
+
+SERVICE_KERNEL_DRIVER=1
+SERVICE_AUTO_START=2
+SERVICE_ERROR_NORMAL=1
+
+Msft="10Moons"
+MS="10Moons"
+MediaClassName="Sound, video and game controllers"
+btxbar01.DeviceDesc="10Moons1 SDK2000 WDM Crossbar"
+btxbar01.Crossbar="10Moons1 SDK2000 Crossbar"
+GUID_NULL="{00000000-0000-0000-0000-000000000000}"
+;0xa19dc0e0, 0x3b39, 0x11d1, 0x90, 0x5f, 0x0, 0x0, 0xc0, 0xcc, 0x16, 0xba
+GUID_0="{A19DC0E0-3B39-11D1-905F-0000C0CC16BA}"
+;0xa19dc0e3, 0x3b39, 0x11d1, 0x90, 0x5f, 0x0, 0x0, 0xc0, 0xcc, 0x16, 0xba
+GUID_3="{A19DC0E3-3B39-11D1-905F-0000C0CC16BA}"
+;0xa19dc0e5, 0x3b39, 0x11d1, 0x90, 0x5f, 0x0, 0x0, 0xc0, 0xcc, 0x16, 0xba
+GUID_5="{A19DC0E5-3B39-11D1-905F-0000C0CC16BA}"
+;0xa19dc0e4, 0x3b39, 0x11d1, 0x90, 0x5f, 0x0, 0x0, 0xc0, 0xcc, 0x16, 0xba
+GUID_4="{A19DC0E4-3B39-11D1-905F-0000C0CC16BA}"

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设备管理</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .container-fluid{margin: 0;padding: 0;}
+        .top_left{background: #d5a380;height: 500px;}
+        .top_right{background: #a27150;min-height: 500px;}
+        .top_left h1{line-height: 5.1;text-align: right;padding: 0 15%;margin: 0;}
+        .top_left a{padding: 10px 30px;float: right;border-color: #000;background: transparent;margin-right: 20%;}
+        .top_right>p{padding-right: 10%;color: #fff;line-height: 2.3}
+        .top_right>p a{color:#fff;margin-left: 10px;}
+        .content_box{margin-top: 22%;color: #fff}
+        .box{margin: 5% auto;}
+        .header > a{padding: 5% 0;margin-top: 1%;font-size: 36px;text-decoration: none;color: #000}
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="col-lg-4 col-md-3  top_left ">
+        <h1>设备管理</h1>
+        <a href="./content_4.html" class="btn-default btn">添加</a>
+    </div>
+    <div class="col-lg-8 col-md-9  top_right clearfix">
+        <p class="text-right"><span>管理员 </span> <a href="javascript:;"> [退出] </a></p>
+        <div class="row col-xs-12">
+            <div class="col-xs-10 box clearfix center-block">
+                <a onmousedown="copy(this,'content_4.html')" class="row col-sm-6 col-xs-12 center-block">
+                    <img class="col-sm-6 col-xs-7" src="./img/content1.png" alt="">
+                    <div class="col-sm-6 col-xs-10 content_box">
+                        <p>活动室A</p>
+                        <p>位置：N6 5楼</p>
+                    </div>
+                </a>
+                <a onmousedown="copy(this,'content_4.html')" class="row col-sm-6 col-xs-12 center-block">
+                    <img class="col-sm-6 col-xs-7" src="./img/content1.png" alt="">
+                    <div class="col-sm-6 col-xs-10 content_box">
+                        <p>活动室A</p>
+                        <p>位置：N6 5楼</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-xs-10 box clearfix center-block">
+                <a onmousedown="copy(this,'content_4.html')" class="row col-sm-6 col-xs-12 center-block">
+                    <img class="col-sm-6 col-xs-7" src="./img/content1.png" alt="">
+                    <div class="col-sm-6 col-xs-10 content_box">
+                        <p>活动室A</p>
+                        <p>位置：N6 5楼</p>
+                    </div>
+                </a>
+                <a onmousedown="copy(this,'content_4.html')" class="row col-sm-6 col-xs-12 center-block">
+                    <img class="col-sm-6 col-xs-7" src="./img/content1.png" alt="">
+                    <div class="col-sm-6 col-xs-10 content_box">
+                        <p>活动室A</p>
+                        <p>位置：N6 5楼</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 header">
+        <div style="width: 0;height: 0;position: relative;left: 70%;border-left: 25px solid transparent;border-right: 25px solid transparent;border-top: 35px solid #a27150;"></div>
+        <div class="col-xs-1"></div>
+        <a href="./content1.html" class="col-xs-2 text-center" style="background: #57c176">
+            <span>人员管理</span>
+        </a>
+        <div class="col-xs-1"></div>
+        <a href="./content3.html" class="col-xs-2 text-center" style="background: #91b3bf">
+            <span>预约管理</span>
+        </a>
+        <div class="col-xs-1"></div>
+        <a href="javascript:;" class="col-xs-2 text-center" style="background: #a27150">
+            <span>设备管理</span>
+        </a>
+        <div class="col-xs-1"></div>
+        <a href="./content2.html" class="col-xs-2 text-center" style="background: #e0706f">
+            <span>消息管理</span>
+        </a>
+    </div>
+</div>
+</body>
+<script src="./js/common.js"></script>
+<script>
+    window.onload = function () {
+        var top_left = document.getElementsByClassName('top_left')[0];
+        var top_right = document.getElementsByClassName('top_right')[0];
+        top_left.style.height = top_right.offsetHeight + 'px';
+    };
+</script>
+</html>

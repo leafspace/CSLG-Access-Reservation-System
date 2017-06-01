@@ -1,0 +1,38 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: controllerMFC_V6 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\wg\LOCALS~1\Temp\RSP77.tmp" with contents
+[
+/nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/controllerMFC_V6.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Documents and Settings\wg\×ÀÃæ\wcomm_sdk\V1.0\Samples\VC6.0\485 Controller-VC6.0\controllerMFC_V6Dlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\wg\LOCALS~1\Temp\RSP77.tmp" 
+Creating temporary file "C:\DOCUME~1\wg\LOCALS~1\Temp\RSP78.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/controllerMFC_V6.pdb" /debug /machine:I386 /out:"Debug/controllerMFC_V6.exe" /pdbtype:sept 
+".\Debug\controllerMFC_V6.obj"
+".\Debug\controllerMFC_V6Dlg.obj"
+".\Debug\StdAfx.obj"
+".\Debug\controllerMFC_V6.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\wg\LOCALS~1\Temp\RSP78.tmp"
+<h3>Output Window</h3>
+Compiling...
+controllerMFC_V6Dlg.cpp
+Linking...
+Creating command line "bscmake.exe /nologo /o"Debug/controllerMFC_V6.bsc"  ".\Debug\StdAfx.sbr" ".\Debug\controllerMFC_V6.sbr" ".\Debug\controllerMFC_V6Dlg.sbr""
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+controllerMFC_V6.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

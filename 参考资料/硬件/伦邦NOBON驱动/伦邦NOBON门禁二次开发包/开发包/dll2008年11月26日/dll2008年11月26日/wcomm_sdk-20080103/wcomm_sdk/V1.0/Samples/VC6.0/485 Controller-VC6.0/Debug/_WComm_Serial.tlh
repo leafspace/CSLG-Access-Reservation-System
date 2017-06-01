@@ -1,0 +1,76 @@
+// Created by Microsoft (R) C/C++ Compiler Version 12.00.8168.0 (f3d3c969).
+//
+// c:\wcomm_sdk\v1.0\samples\vc6.0\485 controller-vc6.0\debug\_WComm_Serial.tlh
+//
+// C++ source equivalent of Win32 type library ..\..\..\bin\_WComm_Serial.tlb
+// compiler-generated file created 08/31/07 at 09:20:19 - DO NOT EDIT!
+
+#pragma once
+#pragma pack(push, 8)
+
+#include <comdef.h>
+
+namespace WComm_Serial {
+
+//
+// Forward references and typedefs
+//
+
+struct /* coclass */ CWComm_Serial;
+struct __declspec(uuid("17eac671-8b4e-47f6-90e0-1cc210b77502"))
+/* dual interface */ IWComm_Serial;
+
+//
+// Smart pointer typedef declarations
+//
+
+_COM_SMARTPTR_TYPEDEF(IWComm_Serial, __uuidof(IWComm_Serial));
+
+//
+// Type library items
+//
+
+struct __declspec(uuid("02c29d61-0a60-42b4-b2d6-1b2f2f32d212"))
+CWComm_Serial;
+    // [ default ] interface IWComm_Serial
+
+struct __declspec(uuid("17eac671-8b4e-47f6-90e0-1cc210b77502"))
+IWComm_Serial : IDispatch
+{
+    //
+    // Property data
+    //
+
+    __declspec(property(get=GetErrCode))
+    long ErrCode;
+
+    //
+    // Wrapper methods for error-handling
+    //
+
+    _bstr_t serial_comm (
+        _bstr_t bstrCommand,
+        _bstr_t bstrPort );
+    long GetErrCode ( );
+
+    //
+    // Raw methods provided by interface
+    //
+
+    virtual HRESULT __stdcall raw_serial_comm (
+        BSTR bstrCommand,
+        BSTR bstrPort,
+        BSTR * pbstrInfo ) = 0;
+    virtual HRESULT __stdcall get_ErrCode (
+        long * pVal ) = 0;
+};
+
+//
+// Wrapper method implementations
+//
+
+#include "c:\wcomm_sdk\v1.0\samples\vc6.0\485 controller-vc6.0\debug\_WComm_Serial.tli"
+
+} // namespace WComm_Serial
+
+#pragma pack(pop)

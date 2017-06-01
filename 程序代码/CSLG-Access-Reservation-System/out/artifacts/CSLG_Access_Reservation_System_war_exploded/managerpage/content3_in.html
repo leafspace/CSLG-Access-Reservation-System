@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>预约管理</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .container-fluid{margin: 0;padding: 0;}
+        @media screen and (min-width: 768px){
+            html,body,.container-fluid{width: 100%;height: 100%;}
+        }
+        .top_left{background: #c3d6dd;height: 100%}
+        .top_right{background: #91b3bf;height: 100%;}
+        .top_left h1{line-height: 5.1;text-align: right;padding: 0 15%;margin: 0;}
+        .top_left a{padding: 10px 30px;float: right;border-color: #fff;background: transparent;margin-right: 20%;}
+        .top_right>p{padding-right: 10%;color: #fff;line-height: 2.3}
+        .top_right>p a{color:#fff;margin-left: 10px;}
+        .top_right h3{color: #fff;line-height: 2}
+        .top_right span{position: relative;top: 2px;}
+        .top_right input{color: #fff;background: transparent;border: 1px solid #000;outline: none;height: 100%;}
+        .top_right > div > h3{line-height: 100px;}
+        .top_right > div > h3:first-child input{width: 150px;}
+        .header > div:not(:first-child){padding: 5% 0;margin-top: 1%;}
+        @media screen and (max-width: 1200px){
+            .san{left: 25%!important;}
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="col-lg-4 col-md-3  top_left ">
+        <h1>预约管理</h1>
+        <a href="./content3.html" class="btn-default btn" style="background: #fff;z-index: 999">返回</a>
+    </div>
+    <div class="san" style="z-index: 9999;position: absolute;left: 33.3%;top: 5%;width: 0;height: 0;border-top: 25px solid transparent;border-left: 30px solid #c3d6dd;border-bottom: 25px solid transparent;"></div>
+    <div class="col-lg-8 col-md-9  top_right clearfix">
+        <p class="text-right"><span>管理员 </span> <a href="javascript:;"> [退出] </a></p>
+        <div class="col-sm-12">
+            <h3>
+                预约日期
+                <input type="text" value="年">年
+                <input type="text" value="月">月
+                <input type="text" value="日">日
+            </h3>
+            <h3>
+                开始时间
+                <input type="text" value="--:--">
+            </h3>
+            <h3>
+                结束时间
+                <input type="text" value="--:--">
+            </h3>
+            <h3>
+                活动信息备注
+                <input type="text" style='height:80px;vertical-align: top'>
+            </h3>
+        </div>
+        <h3 style="line-height: 5;text-align: center">
+            <a href="javascript:;" class="btn btn-default">提交预约</a>
+        </h3>
+    </div>
+</div>
+</body>
+</html>

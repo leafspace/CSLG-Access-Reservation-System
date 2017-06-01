@@ -1,0 +1,250 @@
+// Created by Microsoft (R) C/C++ Compiler Version 12.00.8168.0 (d826c01d).
+//
+// WComm_UDP.tlh
+//
+// C++ source equivalent of Win32 type library ..\..\..\bin\WComm_UDP.tlb
+// compiler-generated file created 08/31/07 at 14:39:06 - DO NOT EDIT!
+
+#pragma once
+#pragma pack(push, 8)
+
+#include <comdef.h>
+
+namespace WComm_UDP {
+
+//
+// Forward references and typedefs
+//
+
+struct __declspec(uuid("fca06268-89ed-3916-bdf5-5424c25d456c"))
+/* dual interface */ IWCOMM_WATCH;
+struct /* coclass */ WComm_Watch;
+struct __declspec(uuid("23254cf2-2114-335d-a323-c7a252a4f05d"))
+/* dual interface */ IWCOMM_OPERATE;
+struct /* coclass */ WComm_Operate;
+struct __declspec(uuid("ca60cae5-4642-3d65-b47f-72a8ab94c186"))
+/* dual interface */ _WComm_Watch;
+struct __declspec(uuid("0dac92be-6e3a-355f-9343-02e4e0162683"))
+/* dual interface */ _WComm_Operate;
+
+//
+// Smart pointer typedef declarations
+//
+
+_COM_SMARTPTR_TYPEDEF(IWCOMM_WATCH, __uuidof(IWCOMM_WATCH));
+_COM_SMARTPTR_TYPEDEF(IWCOMM_OPERATE, __uuidof(IWCOMM_OPERATE));
+_COM_SMARTPTR_TYPEDEF(_WComm_Watch, __uuidof(_WComm_Watch));
+_COM_SMARTPTR_TYPEDEF(_WComm_Operate, __uuidof(_WComm_Operate));
+
+//
+// Type library items
+//
+
+struct __declspec(uuid("fca06268-89ed-3916-bdf5-5424c25d456c"))
+IWCOMM_WATCH : IDispatch
+{
+    //
+    // Property data
+    //
+
+    __declspec(property(get=GetErrCode))
+    __int64 ErrCode;
+    __declspec(property(get=GetErrMessage))
+    _bstr_t ErrMessage;
+
+    //
+    // Wrapper methods for error-handling
+    //
+
+    __int64 start (
+        long ipPort );
+    __int64 close ( );
+    _bstr_t getdata ( );
+    __int64 GetErrCode ( );
+    _bstr_t GetErrMessage ( );
+
+    //
+    // Raw methods provided by interface
+    //
+
+    virtual HRESULT __stdcall raw_start (
+        long ipPort,
+        __int64 * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_close (
+        __int64 * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_getdata (
+        BSTR * pRetVal ) = 0;
+    virtual HRESULT __stdcall get_ErrCode (
+        __int64 * pRetVal ) = 0;
+    virtual HRESULT __stdcall get_ErrMessage (
+        BSTR * pRetVal ) = 0;
+};
+
+struct __declspec(uuid("585e5b3c-2833-3299-bed2-20743ea4b224"))
+WComm_Watch;
+    // [ default ] interface _WComm_Watch
+    // interface _Object
+    // interface IWCOMM_WATCH
+
+struct __declspec(uuid("23254cf2-2114-335d-a323-c7a252a4f05d"))
+IWCOMM_OPERATE : IDispatch
+{
+    //
+    // Property data
+    //
+
+    __declspec(property(get=GetErrCode))
+    __int64 ErrCode;
+    __declspec(property(get=GetErrMessage))
+    _bstr_t ErrMessage;
+    __declspec(property(get=GetminUDPWaitTimeout,put=PutminUDPWaitTimeout))
+    __int64 minUDPWaitTimeout;
+
+    //
+    // Wrapper methods for error-handling
+    //
+
+    _bstr_t udp_comm (
+        _bstr_t commandString,
+        _bstr_t ipAddr,
+        long ipPort );
+    _bstr_t CreateBstrCommand (
+        __int64 controllerSN,
+        _bstr_t strFuncData );
+    _bstr_t CreateBstrCommandOfAdjustClockByPCTime (
+        __int64 controllerSN );
+    _bstr_t GetSwipeDateFromRunInfo (
+        _bstr_t strRunInfo,
+        __int64 * cardId,
+        __int64 * status );
+    _bstr_t MSDateYmdToWCDateYmd (
+        _bstr_t strMSDateYmd );
+    _bstr_t MSDateHmsToWCDateHms (
+        _bstr_t strMSDateHms );
+    _bstr_t WCDateToMSDate (
+        _bstr_t strWCDate );
+    __int64 GetSNFromRunInfo (
+        _bstr_t strRunInfo );
+    _bstr_t GetClockTimeFromRunInfo (
+        _bstr_t strRunInfo );
+    __int64 GetCardRecordCountFromRunInfo (
+        _bstr_t strRunInfo );
+    __int64 GetPrivilegeNumFromRunInfo (
+        _bstr_t strRunInfo );
+    __int64 GetDoorStatusFromRunInfo (
+        _bstr_t strRunInfo,
+        __int64 lngDoorNo );
+    __int64 GetButtonStatusFromRunInfo (
+        _bstr_t strRunInfo,
+        __int64 lngDoorNo );
+    __int64 GetErrorNoFromRunInfo (
+        _bstr_t strRunInfo );
+    _bstr_t NumToStrHex (
+        __int64 num,
+        __int64 Len );
+    __int64 StrHexToNum (
+        _bstr_t strHex );
+    _bstr_t CardToStrHex (
+        __int64 cardId );
+    __int64 GetErrCode ( );
+    _bstr_t GetErrMessage ( );
+    void PutminUDPWaitTimeout (
+        __int64 pRetVal );
+    __int64 GetminUDPWaitTimeout ( );
+
+    //
+    // Raw methods provided by interface
+    //
+
+    virtual HRESULT __stdcall raw_udp_comm (
+        BSTR commandString,
+        BSTR ipAddr,
+        long ipPort,
+        BSTR * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_CreateBstrCommand (
+        __int64 controllerSN,
+        BSTR strFuncData,
+        BSTR * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_CreateBstrCommandOfAdjustClockByPCTime (
+        __int64 controllerSN,
+        BSTR * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_GetSwipeDateFromRunInfo (
+        BSTR strRunInfo,
+        __int64 * cardId,
+        __int64 * status,
+        BSTR * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_MSDateYmdToWCDateYmd (
+        BSTR strMSDateYmd,
+        BSTR * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_MSDateHmsToWCDateHms (
+        BSTR strMSDateHms,
+        BSTR * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_WCDateToMSDate (
+        BSTR strWCDate,
+        BSTR * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_GetSNFromRunInfo (
+        BSTR strRunInfo,
+        __int64 * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_GetClockTimeFromRunInfo (
+        BSTR strRunInfo,
+        BSTR * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_GetCardRecordCountFromRunInfo (
+        BSTR strRunInfo,
+        __int64 * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_GetPrivilegeNumFromRunInfo (
+        BSTR strRunInfo,
+        __int64 * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_GetDoorStatusFromRunInfo (
+        BSTR strRunInfo,
+        __int64 lngDoorNo,
+        __int64 * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_GetButtonStatusFromRunInfo (
+        BSTR strRunInfo,
+        __int64 lngDoorNo,
+        __int64 * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_GetErrorNoFromRunInfo (
+        BSTR strRunInfo,
+        __int64 * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_NumToStrHex (
+        __int64 num,
+        __int64 Len,
+        BSTR * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_StrHexToNum (
+        BSTR strHex,
+        __int64 * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_CardToStrHex (
+        __int64 cardId,
+        BSTR * pRetVal ) = 0;
+    virtual HRESULT __stdcall get_ErrCode (
+        __int64 * pRetVal ) = 0;
+    virtual HRESULT __stdcall get_ErrMessage (
+        BSTR * pRetVal ) = 0;
+    virtual HRESULT __stdcall put_minUDPWaitTimeout (
+        __int64 pRetVal ) = 0;
+    virtual HRESULT __stdcall get_minUDPWaitTimeout (
+        __int64 * pRetVal ) = 0;
+};
+
+struct __declspec(uuid("45526614-65d4-33fa-bb87-e29a5f44e18e"))
+WComm_Operate;
+    // [ default ] interface _WComm_Operate
+    // interface _Object
+    // interface IWCOMM_OPERATE
+
+struct __declspec(uuid("ca60cae5-4642-3d65-b47f-72a8ab94c186"))
+_WComm_Watch : IDispatch
+{};
+
+struct __declspec(uuid("0dac92be-6e3a-355f-9343-02e4e0162683"))
+_WComm_Operate : IDispatch
+{};
+
+//
+// Wrapper method implementations
+//
+
+#include "WComm_UDP.tli"
+
+} // namespace WComm_UDP
+
+#pragma pack(pop)

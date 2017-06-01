@@ -1,0 +1,27 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="CSLG-Access-Reservation-System:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/CSLG_Access_Reservation_System_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="CSLG-Access-Reservation-System/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="CSLG-Access-Reservation-System" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="$PROJECT_DIR$/support/qrcode.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/support/core-2.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/support/json-lib.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/support/json-lib-2.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/support/ezmorph-1.0.6.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/support/Qrcode_swetake.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/support/commons-logging.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/support/commons-lang-2.3.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/support/commons-beanutils-1.7.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/support/commons-collections-3.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/support/sqljdbc41.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/support/sqljdbc42.jar" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

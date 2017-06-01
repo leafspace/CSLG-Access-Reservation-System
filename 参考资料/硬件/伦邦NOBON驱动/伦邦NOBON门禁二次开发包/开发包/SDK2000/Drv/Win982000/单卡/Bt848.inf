@@ -1,0 +1,153 @@
+; $Header: G:/swdev/wdm/Video/bt848/btcap/rcs/bt848.inf 1.15 1999/07/19 18:04:43 tomz Exp $
+
+;------------------------------------------------------------------------------
+; BT848.INF
+;------------------------------------------------------------------------------
+
+[Version]
+LayoutFile=Layout.inf, Layout1.inf, Layout2.inf
+signature="$CHICAGO$"
+Class=Media
+ClassGUID={4d36e96c-e325-11ce-bfc1-08002be10318}
+Provider=%Msft%
+DriverVer=07//26//2000,1.0.0.1
+
+[Manufacturer]
+%MsftMfg%=Microsoft
+
+;------------------------------------------------------------------------------
+; These are the files we need installed
+;------------------------------------------------------------------------------
+
+[BT848.CopyDrivers]
+BT848.sys
+stream.sys
+
+[BT848.KnownFiles]
+BT848.sys=safe
+
+[DestinationDirs]
+BT848.CopyDrivers=10,system32\drivers   ; would 12 do this? (docs say not for win9x)
+BT848.CopyFilters=11
+
+;------------------------------------------------------------------------------
+; SubSystem Vendor ID List
+;------------------------------------------------------------------------------
+;
+; ID Number     Manufacturer
+;
+; 0x127A        Rockwell Semiconductor Systems Boards
+; 0x14F1        Conexant Boards
+
+;------------------------------------------------------------------------------
+; Device ID List
+;------------------------------------------------------------------------------
+;
+; ID Number     Device
+;
+; 0x350         Bt848
+; 0x351         Bt849
+; 0x36E         Bt878 (Video Section)
+; 0x36F         Bt879 (Video Section)
+; 0x370         Bt880 (Video Section)
+; 0x878         Bt878 (Audio Section)
+; 0x879         Bt879 (Audio Section)
+; 0x880         Bt880 (Audio Section)
+
+;------------------------------------------------------------------------------
+; SubSystem ID List
+;------------------------------------------------------------------------------
+;
+; ID Number  Board                  Assy Drwg No.  Tuner    Std     TunerModel#
+;                                                          
+; 0x0001     Bt878  EVK              N/A            Philips  NTSC    Fm1236
+; 0x0002     Bt878  PEVK             N/A            Philips  PAL BG  FM1216
+; 0x0003     Bt878a PEVKA            N/A            Philips  PAL BG  FM1216
+; 0x0122     Bt879  XIEVK            BX00-D220-011  Philips  PAL I   FM1246
+; 0x0222     Bt879  XBGEVK           BX00-D220-021  Philips  PAL BG  FM1216
+; 0x0322     Bt879  XEVK             BX00-D220-031  Philips  NTSC    FM1236
+; 0x1122     Bt879  XIEVK nopop      BX00-D220-061  Philips  PAL I   FM1246
+; 0x1222     Bt879  XBGEVK nopop     BX00-D220-071  Philips  PAL BG  FM1216
+; 0x1322     Bt879  XEVK nopop       BX00-D220-051  Philips  NTSC    FM1236
+; 0x0422     Bt879  XEVK             BX00-D220-041  Temic    NTSC    4039FY5
+; 0x1522     Bt879a XIEVKA nopop     BX00-D220-161  Philips  PAL I   FM1246
+; 0x1622     Bt879a XBGEVKA nopop    BX00-D220-171  Philips  PAL BG  FM1216
+; 0x1722     Bt879a XEVKA  nopop     BX00-D220-151  Philips  NTSC    FM1236
+; 0x0044     Bt879  EVK              BT00-D440-001  Alps     NTSC    TSCH5-001A
+; 0x0144     Bt879  Alpine           BT00-D440-011  Alps     NTSC    TSCH5-001A
+; 0x0244     Bt879a EVKA             BT00-D440-101  Alps     NTSC    TSCH5-001A
+; 0x0048     Bt878/832  EVK          BT00-D480-001  N/A      Any 
+
+[Microsoft]
+
+
+;   %BT848.VideoDeviceDesc%=BT848.Philips,PCI\VEN_109E&DEV_036E
+;   %BT848.AudioDeviceDesc%=AudioSection, PCI\VEN_109E&DEV_0878
+
+  
+    %BT848.VideoDeviceDesc%=BT848.NoTuner,PCI\VEN_109E&DEV_036E
+    %BT848.AudioDeviceDesc%=AudioSection, PCI\VEN_109E&DEV_0878
+
+
+[AudioSection]
+
+[AudioSection.Services]
+AddService = , 2  ; null service install
+
+[BT848.NoTuner]
+Include=    ks.inf, kscaptur.inf, ksfilter.inf
+Needs=      KS.Registration,KSCAPTUR.Registration.NT,MSPCLOCK.Installation
+AddReg=     BT848.AddReg,NoTuner.AddReg
+CopyFiles=  BT848.CopyDrivers,BT848.CopyFilters
+KnownFiles= BT848.KnownFiles
+
+[BT848.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,BT848.sys
+HKR,,PageOutWhenUnopened,3,01
+HKR,,DontSuspendIfStreamsAreRunning,3,01
+HKR,"DriverData","XBarInPin0",0x00010001, 0x03,0x00,0x00,0x00
+HKR,"DriverData","XBarInPin1",0x00010001, 0x01,0x00,0x00,0x00
+HKR,"DriverData","XBarInPin2",0x00010001, 0x02,0x00,0x00,0x00
+HKR,"DriverData","XBarInPin3",0x00010001, 0x00,0x10,0x00,0x00
+HKR,"DriverData","XTal0",0x00010001, 0x1c, 0x00, 0x00, 0x00
+HKR,"DriverData","XTal1",0x00010001, 0x23, 0x00, 0x00, 0x00
+;HKLM,%RunOnce%,"mvfilter.ax",,"%11%\regsvr32.exe -s %11%\mvfilter.ax"
+
+[NoTuner.AddReg]
+HKR,"ENUM\Device1",pnpid,,"btxbar"
+
+[VideoCapture]
+AddReg=VideoCapture.AddReg
+
+[VideoCapture.AddReg]
+HKR,,CLSID,,{17CCA71B-ECD7-11D0-B908-00A0C9223196}
+HKR,,FriendlyName,,%BT848.Capture%
+
+[BT848.NoTuner.Interfaces]
+AddInterface={65e8773d-8f56-11d0-a3b9-00a0c9223196},"GLOBAL",VideoCapture,
+AddInterface={a799a802-a46d-11d0-a18c-00a02401dcd4},"GLOBAL",VideoTvAudio,
+
+[BT848.NoTuner.Services]
+AddService = BT848,0x00000002,BT848.ServiceInstall
+
+[BT848.ServiceInstall]
+DisplayName   = %BT848.VideoDeviceDesc%
+ServiceType   = %SERVICE_KERNEL_DRIVER%
+StartType     = %SERVICE_AUTO_START%
+ErrorControl  = %SERVICE_ERROR_NORMAL%
+ServiceBinary = %10%\system32\drivers\BT848.sys
+
+[Strings]
+Msft=                   "10Moons"
+MsftMfg=                "10Moons"
+BT848.VideoDeviceDesc=  "10Moons SDK-2000, WDM Video Capture"
+BT848.AudioDeviceDesc=  "10Moons SDK-2000, WDM Audio Capture"
+BT848.Capture=          "10Moons SDK-2000 Video Capture"
+RunOnce=                "SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce"
+
+SERVICE_KERNEL_DRIVER=1
+SERVICE_AUTO_START=2
+SERVICE_ERROR_NORMAL=1
+
+

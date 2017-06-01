@@ -1,0 +1,137 @@
+; $Header: G:/swdev/wdm/Video/bt848_05/btcap/rcs/bt848_05.inf 1.15 1999/07/19 18:04:43 tomz Exp $
+
+;------------------------------------------------------------------------------
+; bt848_05.INF
+;------------------------------------------------------------------------------
+
+[Version]
+LayoutFile=Layout.inf, Layout1.inf, Layout2.inf
+signature="$CHICAGO$"
+Class=Media
+ClassGUID={4d36e96c-e325-11ce-bfc1-08002be10318}
+Provider=%Msft%
+
+[ControlFlags]
+;ExcludeFromSelect=*
+
+[Manufacturer]
+%MsftMfg%=Microsoft
+
+;------------------------------------------------------------------------------
+; These are the files we need installed
+;------------------------------------------------------------------------------
+
+[bt848_05.CopyDrivers]
+bt848_05.sys
+stream.sys
+
+[bt848_05.CopyFilters]
+;mvfilter.ax
+
+[bt848_05.KnownFiles]
+bt848_05.sys=safe
+
+[DestinationDirs]
+bt848_05.CopyDrivers=10,system32\drivers   ; would 12 do this? (docs say not for win9x)
+bt848_05.CopyFilters=11
+
+[Microsoft]
+
+;------------------------------------------------------------------------------
+; bt848_05 and Bt849 boards had no SubSystem ID or SubSystem Vendor ID
+;------------------------------------------------------------------------------
+    %bt848_05.VideoDeviceDesc%=bt848_05.NoTuner,PCI\VEN_109E&DEV_036E&SUBSYS_00000005
+    %bt848_05.AudioDeviceDesc%=AudioSection, PCI\VEN_109E&DEV_0878&SUBSYS_00000005
+
+
+[AudioSection]
+
+[AudioSection.Services]
+AddService = , 2  ; null service install
+
+[bt848_05.NoTuner]
+Include=    ks.inf, kscaptur.inf, ksfilter.inf
+Needs=      KS.Registration,KSCAPTUR.Registration.NT,MSPCLOCK.Installation
+AddReg=     bt848_05.AddReg,NoTuner.AddReg
+DelReg=		bt848_05.DelReh,NoTuner.DelReg
+CopyFiles=  bt848_05.CopyDrivers,bt848_05.CopyFilters
+KnownFiles= bt848_05.KnownFiles
+
+[bt848_05.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,bt848_05.sys
+HKR,,PageOutWhenUnopened,3,01
+HKR,,DontSuspendIfStreamsAreRunning,3,01
+HKR,"DriverData","XBarInPin0",0x00010001, 0x03,0x00,0x00,0x00
+HKR,"DriverData","XBarInPin1",0x00010001, 0x01,0x00,0x00,0x00
+HKR,"DriverData","XBarInPin2",0x00010001, 0x02,0x00,0x00,0x00
+HKR,"DriverData","XBarInPin3",0x00010001, 0x00,0x10,0x00,0x00
+HKR,"DriverData","XTal0",0x00010001, 0x1c, 0x00, 0x00, 0x00
+HKR,"DriverData","XTal1",0x00010001, 0x23, 0x00, 0x00, 0x00
+;HKLM,%RunOnce%,"mvfilter.ax",,"%11%\regsvr32.exe -s %11%\mvfilter.ax"
+
+[bt848_05.DelReg]
+HKR,,DevLoader
+HKR,,NTMPDriver
+HKR,,PageOutWhenUnopened
+HKR,,DontSuspendIfStreamsAreRunning
+HKR,"DriverData"
+
+[NoTuner.AddReg]
+HKR,"ENUM\Device1",pnpid,,"btxbar05"
+
+[NoTuner.DelReg]
+HKR,"ENUM\Device1"
+
+[VideoCapture]
+AddReg=VideoCapture.AddReg
+DelReg=VideoCapture.DelReg
+
+[VideoTvAudio]
+AddReg=VideoTvAudio.AddReg
+DelReg=VideoTvAudio.DelReg
+
+[VideoCapture.AddReg]
+HKR,,CLSID,,{17CCA71B-ECD7-11D0-B908-00A0C9223196}
+HKR,,FriendlyName,,%bt848_05.Capture%
+
+[VideoCapture.DelReg]
+HKR,,CLSID
+HKR,,FriendlyName
+
+[VideoTvAudio.AddReg]
+HKR,,CLSID,,{71F96462-78F3-11d0-A18C-00A0C9118956}
+HKR,,FriendlyName,,%bt848_05.TvAudio%
+
+[VideoTvAudio.DelReg]
+HKR,,CLSID
+HKR,,FriendlyName
+
+[bt848_05.NoTuner.Interfaces]
+AddInterface={65e8773d-8f56-11d0-a3b9-00a0c9223196},"GLOBAL",VideoCapture,
+AddInterface={a799a802-a46d-11d0-a18c-00a02401dcd4},"GLOBAL",VideoTvAudio,
+
+[bt848_05.NoTuner.Services]
+AddService = bt848_05,0x00000002,bt848_05.ServiceInstall
+
+[bt848_05.ServiceInstall]
+DisplayName   = %bt848_05.VideoDeviceDesc%
+ServiceType   = %SERVICE_KERNEL_DRIVER%
+StartType     = %SERVICE_AUTO_START%
+ErrorControl  = %SERVICE_ERROR_NORMAL%
+ServiceBinary = %10%\system32\drivers\bt848_05.sys
+
+[Strings]
+Msft=                   "10Moons"
+MsftMfg=                "10Moons"
+bt848_05.VideoDeviceDesc=  "10Moons5 SDK2000 Video Capture"
+bt848_05.AudioDeviceDesc=  "10Moons5 SDK2000 Audio Capture"
+bt848_05.Capture=          "10Moons5 SDK2000 Capture"
+bt848_05.TvAudio=          "10Moons5 SDK2000 TvAudio"
+RunOnce=                "SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce"
+
+SERVICE_KERNEL_DRIVER=1
+SERVICE_AUTO_START=2
+SERVICE_ERROR_NORMAL=1
+
+

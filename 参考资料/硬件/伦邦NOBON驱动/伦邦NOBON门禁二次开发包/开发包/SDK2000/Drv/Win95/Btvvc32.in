@@ -1,0 +1,71 @@
+;----------------------------------------------------------------------------
+; BTVVC32.INF
+;
+; Brooktree 32 bit Video Codec Installation File for Windows 95
+;
+; Copyright (c) Brooktree Corporation 1996,1997.
+;
+; All rights reserved.
+;----------------------------------------------------------------------------
+
+[Version]
+Signature="$WINDOWS 95$"
+Provider=%Brooktree%
+Class=MEDIA
+
+[Manufacturer]
+%BtMfgName%=Brooktree
+
+[Brooktree]
+%BTVVC32.DeviceDesc%=BTVVC32
+
+[BTVVC32]
+CopyFiles=BTVVC32.Copy
+Updateinis = BTVVC32.Updateini
+Addreg = BTVVC32.Addreg
+MediaType = SOFTWARE
+
+[BTVVC32.Copy]
+btvvc32.drv
+
+[BTVVC32.UpdateIni]
+system.ini,drivers,"VIDC.BT20=*"
+system.ini,drivers,"VIDC.Y41P=*"
+system.ini,drivers,"VIDC.YVU9=*"
+system.ini,drivers32,,"VIDC.BT20=btvvc32.drv"
+system.ini,drivers32,,"VIDC.Y41P=btvvc32.drv"
+; Convoluted way of adding a VIDC.YVU9 entry if one does not already exist
+system.ini,drivers32,"VIDC.YVU9=*","~VIDCYVU9Temp~=*", 3
+system.ini,drivers32,,"VIDC.YVU9=btvvc32.drv"
+system.ini,drivers32,"~VIDCYVU9Temp~=*","VIDC.YVU9=*", 3
+
+[BTVVC32.AddReg]
+HKLM,SYSTEM\CurrentControlSet\Control\MediaResources\icm\vidc.BT20,Description,,%BTVVC32.DeviceDescBT20%
+HKLM,SYSTEM\CurrentControlSet\Control\MediaResources\icm\vidc.BT20,Driver,,btvvc32.drv
+HKLM,SYSTEM\CurrentControlSet\Control\MediaResources\icm\vidc.Y41P,Description,,%BTVVC32.DeviceDescY41P%
+HKLM,SYSTEM\CurrentControlSet\Control\MediaResources\icm\vidc.Y41P,Driver,,btvvc32.drv
+; only add YVU9 entries if they presently do not exist (use flags of 2)
+HKLM,SYSTEM\CurrentControlSet\Control\MediaResources\icm\vidc.YVU9,Description,2,%BTVVC32.DeviceDescYVU9%
+HKLM,SYSTEM\CurrentControlSet\Control\MediaResources\icm\vidc.YVU9,Driver,2,btvvc32.drv
+
+
+;---------------------------------------------------------------;
+
+[DestinationDirs]
+DefaultDestDir = 11     ; LDID_SYS
+BTVVC32.Copy = 11
+
+[SourceDisksNames]
+1="Brooktree Installable Codec Driver Disk",, 0001
+
+[SourceDisksFiles]
+btvvc32.drv=1
+
+[Strings]
+MediaClassName="Media Devices"
+Brooktree="Brooktree"
+BtMfgName="Brooktree Corp."
+BTVVC32.DeviceDesc="Brooktree Prosumer/YUV Video Compressor and Decompressor"
+BTVVC32.DeviceDescBT20="Brooktree Prosumer Video Codec"
+BTVVC32.DeviceDescY41P="Brooktree YUV 411 (Y41P) Video Codec"
+BTVVC32.DeviceDescYVU9="Brooktree YUV 9 (YVU9) Video Decompressor"
