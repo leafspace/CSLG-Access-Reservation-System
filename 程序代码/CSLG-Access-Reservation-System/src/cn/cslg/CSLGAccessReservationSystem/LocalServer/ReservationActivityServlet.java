@@ -2,22 +2,22 @@ package cn.cslg.CSLGAccessReservationSystem.LocalServer;
 
 import cn.cslg.CSLGAccessReservationSystem.ServerBean.*;
 
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  * Created by Administrator on 2017/3/21.
  */
-public class ReservationActivityServlet extends HttpServlet{
-    /*
+public class ReservationActivityServlet extends HttpServlet {
+    /**
     * Programmer:leafspace
     * Phone number:18852923073
     * Contact E-mail:18852923073@163.com
@@ -66,7 +66,11 @@ public class ReservationActivityServlet extends HttpServlet{
             }
 
             //日期相同，Todo 看时间上是否存在交叉
-            if(time.finish >= tempListTime.start - 5 | time.start <= tempListTime.finish + 5) {
+            if(time.start <= tempListTime.start - 5){
+                if(time.finish >= tempListTime.start - 5){
+                    return false;
+                }
+            }else if(time.start <= tempListTime.finish + 5){
                 return false;
             }
         }
@@ -107,7 +111,10 @@ public class ReservationActivityServlet extends HttpServlet{
         }
 
         ReservationMessage reservationMessage = new ReservationMessage(user, activity_room, time, isValid, isLock, information);
-        boolean isSuccessed = checkReservationMessage(reservationMessage) & user.reservationActivityRoom(reservationMessage);
+        boolean isSuccessed = checkReservationMessage(reservationMessage);
+        if(isSuccessed){
+            isSuccessed = user.reservationActivityRoom(reservationMessage);
+        }
         if(isSuccessed) {
             System.out.println("Info (Reservation activity servlet) : The " + user.getUserName() + " reservation " + activity_room.room_name + " successfully !");
         } else {

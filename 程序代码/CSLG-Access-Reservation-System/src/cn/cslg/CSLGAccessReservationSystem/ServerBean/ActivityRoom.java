@@ -12,11 +12,12 @@ public class ActivityRoom {
     public String information = null;                                          //活动室备注信息
 
     public ActivityRoom(String room_id) {
+       
         this.room_id = room_id;
         this.getDataFromDatabase(this.room_id);
     }
-
-    public ActivityRoom(String room_name, String information) {
+    
+     public ActivityRoom(String room_name, String information) {
         this.room_name = room_name;
         this.information = information;
     }
@@ -35,10 +36,11 @@ public class ActivityRoom {
         try{
             while(resultSet != null & resultSet.next()){
                 this.room_id = resultSet.getString(1);
-                this.room_name = resultSet.getString(2);
+                this.room_name = resultSet.getString(2);     
                 this.information = resultSet.getString(3);
                 break;
             }
+            
         }catch (SQLException e){
             e.printStackTrace();
         }finally {

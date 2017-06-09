@@ -19,6 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 public class RegisterServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+        
+        response.setCharacterEncoding("utf-8");                                //设置 编码格式
+        request.setCharacterEncoding("utf-8");                                 //设置 编码格式
+        
         String username = request.getParameter("user");
         String password = request.getParameter("passwd");
         String identity_number = request.getParameter("identity_number");
@@ -30,7 +34,7 @@ public class RegisterServlet extends HttpServlet {
         try{
             if(resultSet.next()) {                                             //说明系统数据库当中已经存在此用户
                 System.out.println("User Error Info (RegisterServlet) : System already have this user !");
-                response.sendRedirect("index.jsp?errorInfo=当前已存在此用户");
+                response.sendRedirect("index.jsp?errorInfo=当前用户已存在");
             } else {
                 Manager manager = new Manager("1");
                 manager.addUser(new User(username, password, wechat_id, "", identity_number, information, true));

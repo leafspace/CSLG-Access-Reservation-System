@@ -25,7 +25,7 @@ html{_background-image:url(about:blank); _background-attachment:fixed;}
 .laydate_body .laydate_box .laydate_show{display:block;}
 .laydate_body .laydate_box input{outline:0; font-size:14px; background-color:#fff;}
 .laydate_body .laydate_top{position:relative; height:26px; padding:5px; *width:100%; z-index:99;}
-.laydate_body .laydate_ym{position:relative; float:left; width height:24px; cursor:pointer;}
+.laydate_body .laydate_ym{position:relative; float:left; width:24px;height:24px; cursor:pointer;}
 .laydate_body .laydate_ym input{float:left; height:24px; line-height:24px; text-align:center; border:none; cursor:pointer;}
 .laydate_body .laydate_ym .laydate_yms{position:absolute; left: -1px; top: 24px; height:181px;}
 .laydate_body .laydate_y{width:121px; margin-right:6px;}

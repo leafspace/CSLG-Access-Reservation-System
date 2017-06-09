@@ -70,7 +70,7 @@
 							<ul id="userInformation">
 								<li>
 									<span>微信号</span>
-									<label for="name">
+									<label for="wechat_id">
 										<input id="wechat_id" type="text" placeholder="请输入微信号" />
 									</label>
 								</li>
@@ -85,7 +85,7 @@
 									<span>学/工号</span>
 									<label for="amount">
 										<input id="amount" style="IME-MODE: disabled;" onkeyup="this.value=this.value.replace(/\D/g,'')"
-                                               onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="8" name="amount" type="text" placeholder="请输入学/工号" />
+                                               onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="9" name="amount" type="text" placeholder="请输入学/工号" />
 									</label>
 								</li>
 								<li>
@@ -151,7 +151,7 @@
 				amount = $('#amount').val(),
 				password = $('#password').val();
 			if( wechat_id == '' ){
-				alert('请填写用户名');
+				alert('请填写微信号');
 				return false;
 			}
 			if( phoneNum == '' ){
@@ -189,7 +189,7 @@
 			 }
 
 			 //发送请求至后端 - 并传递参数数据
-			 xmlhttp.open("GET","UpdateUserServlet?flag=update&wechat_id="+wechat_id+"&phoneNum="+phoneNum+"&amount="+amount+"&password="+password+"&information="+information,true);
+			 xmlhttp.open("GET","UpdateUserServlet?flag=update&wechat_id="+wechat_id+"&phone_number="+phoneNum+"&identity_number="+amount+"&password="+password+"&information="+information, true);
 			 xmlhttp.send();
 			 xmlhttp.onreadystatechange=function() {
 				 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {

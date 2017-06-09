@@ -18,8 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-			
-		request.setCharacterEncoding("utf-8");//设置 编码格式
+        
+        request.setCharacterEncoding("utf-8");//设置 编码格式
+        
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
@@ -34,13 +35,13 @@ public class LoginServlet extends HttpServlet {
                     request.getSession().setAttribute("manager", manager);
                     //Todo 跳转到管理员界面
                     System.out.println("Info (LoginServlet) : The No." + user_id + " manager login system .");
-                    response.sendRedirect("managerpage/content1.html");           //此时还未跳转，表示当中存在一些问题，还跳转回index页面；注：此处如果采用服务器跳转，将导致目录内容混乱无法引入
+                    response.sendRedirect("managerpage/content1.jsp");         //此时还未跳转，表示当中存在一些问题，还跳转回index页面；注：此处如果采用服务器跳转，将导致目录内容混乱无法引入
                 } else {
                     User user = new User(user_id);
                     request.getSession().setAttribute("user", user);
                     //Todo 跳转到一般用户界面
                     System.out.println("Info (LoginServlet) : The No." + user_id + " user login system .");
-                    response.sendRedirect("userpage/index.jsp");              //此时还未跳转，表示当中存在一些问题，还跳转回index页面；注：此处如果采用服务器跳转，将导致目录内容混乱无法引入
+                    response.sendRedirect("userpage/index.jsp");               //此时还未跳转，表示当中存在一些问题，还跳转回index页面；注：此处如果采用服务器跳转，将导致目录内容混乱无法引入
                 }
             } else {
                 System.out.println("User Error Info (LoginServlet) : Have no this user login to system !");

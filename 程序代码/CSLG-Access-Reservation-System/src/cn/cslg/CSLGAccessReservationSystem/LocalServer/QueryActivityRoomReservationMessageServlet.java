@@ -2,19 +2,20 @@ package cn.cslg.CSLGAccessReservationSystem.LocalServer;
 
 import cn.cslg.CSLGAccessReservationSystem.ServerBean.*;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.NumberFormat;
-import java.util.ArrayList;
+
+
 import java.util.Calendar;
 import java.util.Iterator;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import java.text.NumberFormat;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 
 /**
  * Created by Administrator on 2017/3/20.
@@ -23,36 +24,63 @@ public class QueryActivityRoomReservationMessageServlet extends HttpServlet {
     private int year;
     private int month;
     private int day;
+    User user;
+    Manager manager;
+    Time time = null;
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        response.setCharacterEncoding("utf-8");//设置 编码格式
-        User userSession=(User)request.getSession().getAttribute("user");
+
+        response.setCharacterEncoding("utf-8");                                //设置 编码格式
+        user = (User) request.getSession().getAttribute("user");
+        manager = (Manager) request.getSession().getAttribute("manager");
         
-        System.out.println(userSession.getUserName());
-        String flag = request.getParameter("flag");//标示查询预约记录
-        System.out.println(flag);
-        String room_id = request.getParameter("room_id");                      //获取输入的room_id
-        String query_way = request.getParameter("query_way");                      //查询预约记录方式
+        String flag = request.getParameter("flag");                            //标示查询预约记录
+
+        ArrayList<ReservationMessage> reservationMessages = null;
         
-        Time time=null;
-        if(flag.equals("query_reservationMessage")){
-            getNewDate();
-            if(query_way.equals("查找本月预约")){
-                time=new Time(year,month,day);
-             }else{
-                time=new Time(year,month-1,day);
+        if(user != null){
+             String room_id = request.getParameter("room_id");                 //获取输入的room_id
+             String query_way = request.getParameter("query_way");             //查询预约记录方式
+   
+             if(flag.equals("query_reservationMessage")) {
+                 getNewDate();
+                 if(query_way.equals("查找本月预约")) {
+                     time = new Time(year, month, day);
+                 }else{
+                    time = new Time(year, month - 1, day);
+                }
+                ActivityRoom activity_room = new ActivityRoom(room_id);
+                reservationMessages = user.queryRoomUsage(time, activity_room);
             }
-            ActivityRoom activity_room = new ActivityRoom(room_id);
-            ArrayList<ReservationMessage> reservationMessages = null;
- 
-            reservationMessages = userSession.queryRoomUsage(time, activity_room);
+        }else{
+            if(flag.equals("query_activityRoomReservation_manager")) {
+                reservationMessages = manager.queryAllReservation();
+            }else {
+                String room_id = request.getParameter("room_id");
+                ActivityRoom activity_room = new ActivityRoom(room_id);
+                getNewDate();
+                time = new Time(year,month,day);
+                reservationMessages = manager.queryRoomUsage(time, activity_room);
+            }
             
-            JSONArray jsonArray=arrayListToJSONArray(reservationMessages);
+        }
+
+        JSONArray jsonArray;
+        if(reservationMessages != null) {
+            jsonArray=arrayListToJSONArray(reservationMessages);
             PrintWriter pw = response.getWriter();
             pw.print(jsonArray.toString());
             pw.close();
-        }
+           
+        }else{
+            jsonArray = new JSONArray();
+            PrintWriter pw = response.getWriter();
+            pw.print(jsonArray);
+            pw.close();
+        }  
     }
+
+
 
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -83,6 +111,11 @@ public class QueryActivityRoomReservationMessageServlet extends HttpServlet {
             reservationMessage=(ReservationMessage)i.next();
             JSONObject jsonObject=new JSONObject();
             jsonObject.put("reservation_id",reservationMessage.reservation_id);
+            if(manager!=null){
+               jsonObject.put("room_name",reservationMessage.room.room_name); 
+               jsonObject.put("room_id",reservationMessage.room.room_id); 
+               
+            }
             jsonObject.put("date",reservationMessage.time.year+"/"+reservationMessage.time.month+"/"+reservationMessage.time.day);
             jsonObject.put("username",reservationMessage.user.getUserName());
             jsonObject.put("start",intTimeToString(reservationMessage.time.start));

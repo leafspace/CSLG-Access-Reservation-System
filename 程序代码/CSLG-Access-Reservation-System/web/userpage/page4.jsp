@@ -20,6 +20,40 @@
         <link rel="stylesheet" media="all" href="css/reset.css" />
         <link rel="shortcut icon" href="door-icons.ico" type="image/x-icon"/>
         <link media="screen and (max-width: 1024px)" rel="stylesheet" href="css/style_phone.css"/>
+        <style>
+            .btn-default {
+                color: #333;
+                background-color: #fff;
+                border-color: #ccc;
+            }
+            .btn {
+                display: inline-block;
+                padding: 6px 12px;
+                margin-bottom: 0;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 1.42857143;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: middle;
+                -ms-touch-action: manipulation;
+                touch-action: manipulation;
+                cursor: pointer;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                background-image: none;
+                border: 1px solid transparent;
+                border-radius: 4px;
+            }
+
+            a {
+                color: #337ab7;
+                text-decoration: none;
+            }
+
+        </style>
         <%
             User user = (User) request.getSession().getAttribute("user");
         %>
@@ -114,12 +148,39 @@
         }(document, window));
 
         var list=new Array();
-        var list1=['num','date','start','duration','qr_location','isValid']
+        var list1=['num','date','start','duration','qr_location','reservation_id']
         var start;
         var end;
         var totalPageNum;
         var pagesize=4;
         var pageNum;
+
+
+
+        function cancelReservation(reservation_id){
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                xmlhttp=new XMLHttpRequest();
+            } else {
+                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            //发送请求至后端 - 并传递参数数�?
+            xmlhttp.open("GET","DeleteReservationServlet?reservation_id="+reservation_id,true);
+            xmlhttp.send();
+            xmlhttp.onreadystatechange=function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var x=xmlhttp.responseText;
+                    response=x;
+                    if(response=="true"){
+                        alert("已成功取消预约!");
+                        location.href ='';
+
+                    }
+                }
+            }
+
+        }
 
         /*
          * 点击上一页按钮跳转响应事件
@@ -179,6 +240,9 @@
                     start=pagesize*(pagenum-1);
                     end=(pagesize*pagenum)<list.length?pagesize*pagenum:list.length;
                 }
+            }else if(totalPageNum == 1 && pagenum == 1){
+                start = 0;
+                end = list.length;
             }
              $("#JS_table tr").remove();
              $("#JS_ul ul").remove();
@@ -218,7 +282,7 @@
               }
                h+='</tr><tr><td>取消预约</td>'
               for(i=start;i<end;i++){
-                  h+='<td>'+ list[i]['isValid'] +'</td>';
+                  h+='<td><a href="javascript:cancelReservation('+list[i]['reservation_id']+');" class="btn btn-default">取消</a></td>';
               }
               h+='</tr>'
 
@@ -285,7 +349,7 @@
                            list[i]['qr_location']=array[i].qr_location;
                       }
                       for(var i=0;i < array.length; i++){
-                           list[i]['isValid']=array[i].isValid;
+                           list[i]['reservation_id']=array[i].reservation_id;
                     }
                    if(array.length<=pagesize){
                        start=0;

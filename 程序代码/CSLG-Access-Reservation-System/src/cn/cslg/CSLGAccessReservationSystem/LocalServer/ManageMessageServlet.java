@@ -3,6 +3,7 @@ package cn.cslg.CSLGAccessReservationSystem.LocalServer;
 import cn.cslg.CSLGAccessReservationSystem.ServerBean.Manager;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +18,24 @@ public class ManageMessageServlet extends HttpServlet{
         Manager manager = (Manager) request.getSession().getAttribute("manager");        //获取session中的manager对象
 
         String reservation_id = request.getParameter("reservation_id");
-        boolean isValid = Boolean.parseBoolean(request.getParameter("isValid"));
+        boolean isValid;
+        if(((String) request.getParameter("isValid")).equals("0")){
+            isValid = false;
+        }else{
+            isValid = true;
+        }
+        
         manager.manageMessage(reservation_id, isValid);
-        request.getRequestDispatcher("?").forward(request, response);          //跳转至相应网页
+        boolean isSuccessed;
+        if(!isValid){
+            isSuccessed = false;
+        }else{
+            isSuccessed = true;
+        }
+        
+        PrintWriter pw = response.getWriter();
+        pw.print(isSuccessed);
+        pw.close();
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)

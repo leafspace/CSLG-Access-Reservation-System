@@ -12,12 +12,18 @@ public class Manager {
     private String username = null;
     private String password = null;
 
-    public Manager(String user_id) {
+	public Manager(String user_id) {
         this.user_id = user_id;
         this.getDataFromDatabase(user_id);
     }
-
-    public Manager(String username, String password) {
+	
+	public Manager(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+	
+    public Manager(String user_id, String username, String password) {
+        this.user_id = user_id;
         this.username = username;
         this.password = password;
     }
@@ -34,7 +40,7 @@ public class Manager {
         return this.password;
     }
 
-    public void getDataFromDatabase(String user_id) {
+	 public void getDataFromDatabase(String user_id) {
         DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
         String sql = "SELECT * FROM Users WHERE user_id = '" + user_id + "';";
         dbSqlServerConnection.getPstmt(sql);
@@ -62,7 +68,9 @@ public class Manager {
         try{
             while(resultSet != null & resultSet.next()){
                 User user = new User(resultSet.getString(1));
-                users.add(user);
+                if(user.getUserName() != null){
+                   users.add(user); 
+                }
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -72,11 +80,11 @@ public class Manager {
         return users;
     }
 
-    public boolean addUser(User user) {
+      public boolean addUser(User user) {
         DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
         String sql = "INSERT INTO Users(userName, password, wechat_id, phone_number, identity_number, is_temporary, is_manager, information) VALUES('" +
                 user.getUserName() + "', '" + user.getPassWord() + "', '" + user.getWeChatID() + "', '" + user.getPhoneNumber() + "', '" + user.getIdentityID()
-                + "', 0, 0, '" + user.information + "');";
+                +"'," +(user.getIsTemporary() ? 1: 0) + ", 0,'" + user.information + "');";
         dbSqlServerConnection.getPstmt(sql);
         dbSqlServerConnection.update();
         dbSqlServerConnection.allClose();
@@ -180,8 +188,7 @@ public class Manager {
     public ArrayList<ReservationMessage> queryRoomUsage(Time time, ActivityRoom activity_room) {   //查询某个活动室的预约情况
         ArrayList<ReservationMessage> reservationMessages = new ArrayList<ReservationMessage>();
         DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
-        String sql = "SELECT reservation_Id FROM Reservations WHERE room_id = '" + activity_room.room_id + "' and valid = 1 and year = " + time.year + " and month = "
-                + time.month + " " + "and day = " + time.day + ";";
+        String sql = "SELECT reservation_Id FROM Reservations WHERE room_id = '" + activity_room.room_id + "' and valid = 1 and year = " + time.year +";";
         dbSqlServerConnection.getPstmt(sql);
         ResultSet resultSet = dbSqlServerConnection.query();
         try{

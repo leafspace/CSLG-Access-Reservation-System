@@ -92,7 +92,7 @@ public class User {
 
     public void getDataFromDatabase(String user_id) {
         DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
-        String sql = "SELECT * FROM Users WHERE user_id = '" + user_id + "';";
+        String sql = "SELECT * FROM Users WHERE user_id = '" + user_id + "'and is_manager=0;";
         dbSqlServerConnection.getPstmt(sql);
         ResultSet resultSet = dbSqlServerConnection.query();
         try{
@@ -138,6 +138,7 @@ public class User {
     }
 
     public ArrayList<ReservationMessage> queryRoomUsage(Time time, ActivityRoom activity_room) {   //查询某个活动室的预约情况
+       
         ArrayList<ReservationMessage> reservationMessages = new ArrayList<ReservationMessage>();
         DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
         
@@ -147,6 +148,25 @@ public class User {
         ResultSet resultSet = dbSqlServerConnection.query();
         
          
+        try{
+            while(resultSet != null & resultSet.next()){
+                ReservationMessage reservationMessage = new ReservationMessage(resultSet.getString(1));
+                reservationMessages.add(reservationMessage);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbSqlServerConnection.allClose();
+        }
+        return reservationMessages;
+    }
+
+    public ArrayList<ReservationMessage> queryReservation() {
+        ArrayList<ReservationMessage> reservationMessages = new ArrayList<ReservationMessage>();
+        DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
+        String sql = "SELECT reservation_Id FROM Reservations WHERE user_id = " + this.user_id + ";";
+        dbSqlServerConnection.getPstmt(sql);
+        ResultSet resultSet = dbSqlServerConnection.query();
         try{
             while(resultSet != null & resultSet.next()){
                 ReservationMessage reservationMessage = new ReservationMessage(resultSet.getString(1));
@@ -178,26 +198,7 @@ public class User {
         }
         return activityRooms;
     }
-
-    public ArrayList<ReservationMessage> queryReservation() {
-        ArrayList<ReservationMessage> reservationMessages = new ArrayList<ReservationMessage>();
-        DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
-        String sql = "SELECT reservation_Id FROM Reservations WHERE user_id = " + this.user_id + ";";
-        dbSqlServerConnection.getPstmt(sql);
-        ResultSet resultSet = dbSqlServerConnection.query();
-        try{
-            while(resultSet != null & resultSet.next()){
-                ReservationMessage reservationMessage = new ReservationMessage(resultSet.getString(1));
-                reservationMessages.add(reservationMessage);
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }finally {
-            dbSqlServerConnection.allClose();
-        }
-        return reservationMessages;
-    }
-
+    
     public boolean reservationActivityRoom(ReservationMessage reservation_message) {
         if(this.user_id == null){
             return false;
@@ -211,6 +212,6 @@ public class User {
         dbSqlServerConnection.getPstmt(sql);
         dbSqlServerConnection.update();
         dbSqlServerConnection.allClose();
-        return true;
+         return true;
     }
 }

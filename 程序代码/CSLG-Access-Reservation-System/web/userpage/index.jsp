@@ -22,7 +22,6 @@
         <link media="screen and (max-width: 1024px)" rel="stylesheet" href="css/style_phone.css"/>
         <%
             User user = (User) request.getSession().getAttribute("user");
-            System.out.println(request.getContextPath());
         %>
     </head>
     <body>
