@@ -25,8 +25,7 @@ public class VerifyMain {
     private static String path = "home/pi/qrCode/image.jpg";
     private static String[] cmdOrder = {"raspistill -t -1000 -o " + path};
 
-    public static void main(String[] args) {
-        //Doing 拍照
+    public static boolean TakePhoto() {
         try {
             Process process = Runtime.getRuntime().exec(cmdOrder);
             process.waitFor();
@@ -34,43 +33,47 @@ public class VerifyMain {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String line = null;
             while((line = bufferedReader.readLine()) != null) {
-                System.out.println(line);
+                System.out.println("Information : (Take photo) " + line);
             }
         } catch (InterruptedException exception) {
-            exception.printStackTrace();
+            return false;
         } catch (IOException exception) {
-            exception.printStackTrace();
+            return false;
         }
+        return true;
+    }
 
-        //Doing 读取二维码数据
+    public static String ExplainQrCodes() {
         File file = new File(path);
         String qrInfo = new CreateParseCode().parseCode(file);
         if (qrInfo == null) {
             System.out.println("Information : (" + qrInfo + ") 这个二维码无法识别!");
-            return ;
+            return null;
         } else if (qrInfo.indexOf("CSLG-AccessReservationSystem&reservation_id=") != 0) {
             System.out.println("Information : (" + qrInfo + ") 这个二维码不属于本系统!");
-            return ;
+            return null;
         }
 
         String reservationID = qrInfo.substring("CSLG-AccessReservationSystem&reservation_id=".length() - 1);
         try {
             Integer.parseInt(reservationID);
         } catch (NumberFormatException exception) {
-            //exception.printStackTrace();
             System.out.println("Information : 错误的二维码!");
-            return ;
+            return null;
         }
 
-        //Doing 数据库验证时间
+        return reservationID;
+    }
+
+    public static boolean CheckTime(String reservationID) {
         ReservationMessage reservationMessage = new ReservationMessage(reservationID);
         Time reservationTime = reservationMessage.time;
 
         if(reservationTime == null) {
-            System.out.println("Information : 数据库中没有此预约信息!");
+            return false;
         }
 
-        Calendar calendar = Calendar.getInstance();//可以对每个时间域单独修改
+        Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
@@ -81,20 +84,47 @@ public class VerifyMain {
         if (reservationTime.year == year & reservationTime.month == month & reservationTime.day == date) {
             int nowTime = hour * 100 + minute;
             if (nowTime >= reservationTime.start & nowTime <= reservationTime.finish) {
-                System.out.println("开门");
+                return true;
             }
         }
 
-        //Doing 开门与否
-        final GpioController gpio = GpioFactory.getInstance();
-        final GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyControl", PinState.HIGH);
-        pin.setShutdownOptions(true, PinState.HIGH);
-        pin.setState(PinState.LOW);
+        return false;
+    }
+
+    public static void OpenDoor(GpioPinDigitalOutput doorController) {
+        doorController.setState(PinState.LOW);
         try {
-            Thread.sleep((long) 1000);
+            Thread.sleep(3000);
         } catch (InterruptedException exception) {
             exception.printStackTrace();
+        } finally {
+            doorController.setState(PinState.HIGH);
         }
-        gpio.shutdown();
+    }
+
+    public static void main(String[] args) {
+
+        boolean isSuccess = true;
+        final GpioController gpioController = GpioFactory.getInstance();
+        final GpioPinDigitalOutput doorController = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyControl", PinState.HIGH);
+        doorController.setShutdownOptions(true, PinState.LOW);
+
+        while (true) {
+            isSuccess = TakePhoto();
+            if (!isSuccess) {
+                System.out.println("Error : System hava a error in take photo !");
+                continue;
+            }
+
+            String reservationID = ExplainQrCodes();
+            if (reservationID != null) {
+                isSuccess = CheckTime(reservationID);
+                if (isSuccess) {
+                    System.out.println("Information : (" + reservationID + ") Open the door !");
+                    OpenDoor(doorController);
+                }
+            }
+        }
+        //gpioController.shutdown();
     }
 }
