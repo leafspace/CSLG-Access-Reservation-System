@@ -20,13 +20,13 @@ import java.awt.image.BufferedImage;
 public class CreateParseCode {
     public static int width = 500;
     public static int height = 500;
-
+    
     public boolean createCode(String text, int width, int height, String path){
         String format = "png";
         HashMap hints = new HashMap();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");                      //内容所使用编码
         try {
-            BitMatrix bitMatrix = new MultiFormatWriter().encode(text,BarcodeFormat.QR_CODE,width,height,hints);
+            BitMatrix bitMatrix = new MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE, width, height, hints);
             File outputFile = new File(path);
             MatrixToImageWriter.writeToFile(bitMatrix, format, outputFile);
             return true;
@@ -51,9 +51,6 @@ public class CreateParseCode {
             Map hints = new HashMap();
             hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
             Result result = formatReader.decode(binaryBitmap, hints);
-            //System.out.println("解析结果 = " + result.toString());
-            //System.out.println("二维码格式类型 = " + result.getBarcodeFormat());
-            //System.out.println("二维码文本内容 = " + result.getText());
             return result.getText();
         } catch (Exception e) {
             e.printStackTrace();

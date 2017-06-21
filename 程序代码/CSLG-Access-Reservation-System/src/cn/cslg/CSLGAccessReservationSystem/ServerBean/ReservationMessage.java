@@ -110,7 +110,8 @@ public class ReservationMessage {
         this.qr_location = "qr_img/qr" + this.reservation_id + ".png";
 
         CreateParseCode cpCode = new CreateParseCode();
-        boolean isSuccess = cpCode.createCode(this.reservation_id, CreateParseCode.width, CreateParseCode.height, this.qr_location);
+        String qr_information = "CSLG-AccessReservationSystem&reservation_id=" + this.reservation_id;
+        boolean isSuccess = cpCode.createCode(qr_information, CreateParseCode.width, CreateParseCode.height, this.qr_location);
         if(!isSuccess) {
             System.out.println("Error (Create qr code) : The No." + this.reservation_id + " reservation message create qr code ('" + this.qr_location + "') failed !");
             return null;

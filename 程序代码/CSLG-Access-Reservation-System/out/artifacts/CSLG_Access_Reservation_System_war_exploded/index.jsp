@@ -17,6 +17,9 @@ To change this template use File | Settings | File Templates.
         <script type="text/javascript" src="images/login.js"></script>
     </head>
     <body>
+        <%
+                String errorInfo=(String)request.getParameter("errorInfo");
+        %>
         <h1>常熟理工学院二维码门禁预约系统<sup>V1.0</sup></h1>
         <div class="login" style="margin-top:50px;">
 
@@ -27,7 +30,16 @@ To change this template use File | Settings | File Templates.
                 </div>
             </div>
 
-
+            <div>
+                <%
+                    if(errorInfo!=null){
+               %>   
+               <p><%=errorInfo%></p> 
+               <%   
+                    }
+               %>
+               
+            </div>
             <div class="web_qr_login" id="web_qr_login" style="display: block; height: 235px;">
                 <!--登录-->
                 <div class="web_login" id="web_login">

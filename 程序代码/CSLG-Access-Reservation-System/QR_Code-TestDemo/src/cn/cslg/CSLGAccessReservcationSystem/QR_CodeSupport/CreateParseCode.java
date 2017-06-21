@@ -23,24 +23,24 @@ public class CreateParseCode {
     public static void  main(String [] args) throws IOException, WriterException {
         CreateParseCode cpCode = new CreateParseCode();
 
-        String url = "做我女朋友吧！";                                                //二维码显示的内容
+        String url = "滚！谁让你扫的！";                                                //二维码显示的内容
         int width = 500;
         int height = 500;
-        String path="D:/123.png";
+        String path="D:/qrCode.png";
 
-        cpCode.createCode(url,width,height,path);
-        cpCode.parseCode(new File("D:/123.png"));
+        cpCode.createCode(url, width, height, path);
+        cpCode.parseCode(new File(path));
     }
 
     public static int width = 500;
     public static int height = 500;
 
-    public void createCode(String text,int width,int height,String path){
+    public void createCode(String text, int width, int height, String path){
         String format = "png";
         HashMap hints = new HashMap();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");                      //内容所使用编码
         try {
-            BitMatrix bitMatrix = new MultiFormatWriter().encode(text,BarcodeFormat.QR_CODE,width,height,hints);
+            BitMatrix bitMatrix = new MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE, width, height, hints);
             File outputFile = new File(path);
             MatrixToImageWriter.writeToFile(bitMatrix, format, outputFile);
         } catch (Exception e) {
