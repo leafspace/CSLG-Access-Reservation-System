@@ -4,10 +4,15 @@ import cn.cslg.ReservationVerify.QR_CodeSupport.CreateParseCode;
 import cn.cslg.ReservationVerify.ServerBean.ReservationMessage;
 import cn.cslg.ReservationVerify.ServerBean.Time;
 
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.PinState;
+import com.pi4j.io.gpio.RaspiPin;
+
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Created by leafspace on 2017/6/20.
@@ -81,6 +86,15 @@ public class VerifyMain {
         }
 
         //Doing 开门与否
-
+        final GpioController gpio = GpioFactory.getInstance();
+        final GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyControl", PinState.HIGH);
+        pin.setShutdownOptions(true, PinState.HIGH);
+        pin.setState(PinState.LOW);
+        try {
+            Thread.sleep((long) 1000);
+        } catch (InterruptedException exception) {
+            exception.printStackTrace();
+        }
+        gpio.shutdown();
     }
 }
