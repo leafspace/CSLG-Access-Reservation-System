@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.3.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib/core-2.2.jar"/>
+	<classpathentry kind="lib" path="lib/ezmorph-1.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/json-lib-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/json-lib.jar"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-core-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-core-sources.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-core.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-device-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-device-sources.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-device.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-example-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-example-sources.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-example.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-gpio-extension-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-gpio-extension-sources.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-gpio-extension.jar"/>
+	<classpathentry kind="lib" path="lib/Qrcode_swetake.jar"/>
+	<classpathentry kind="lib" path="lib/qrcode.jar"/>
+	<classpathentry kind="lib" path="lib/sqljdbc41.jar"/>
+	<classpathentry kind="lib" path="lib/sqljdbc42.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-8-oracle-arm32-vfp-hflt"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

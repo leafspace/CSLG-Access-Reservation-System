@@ -1,6 +1,6 @@
-package cn.cslg.CSLGAccessReservationSystem.ServerBean;
+package cn.cslg.ReservationVerify.ServerBean;
 
-import cn.cslg.CSLGAccessReservationSystem.QR_CodeSupport.CreateParseCode;
+import cn.cslg.ReservationVerify.QR_CodeSupport.CreateParseCode;
 
 import java.io.File;
 import java.sql.ResultSet;
@@ -107,10 +107,10 @@ public class ReservationMessage {
         }
 
         //Todo 通过id确定一个唯一的存放二维码的路径
-        this.qr_location = "D:/qr_img/qr" + this.reservation_id + ".jpg";
+        this.qr_location = "qr_img/qr" + this.reservation_id + ".png";
 
         CreateParseCode cpCode = new CreateParseCode();
-        String qr_information = "二维码预约系统" + this.reservation_id;
+        String qr_information = "CSLG-AccessReservationSystem&reservation_id=" + this.reservation_id;
         boolean isSuccess = cpCode.createCode(qr_information, CreateParseCode.width, CreateParseCode.height, this.qr_location);
         if(!isSuccess) {
             System.out.println("Error (Create qr code) : The No." + this.reservation_id + " reservation message create qr code ('" + this.qr_location + "') failed !");

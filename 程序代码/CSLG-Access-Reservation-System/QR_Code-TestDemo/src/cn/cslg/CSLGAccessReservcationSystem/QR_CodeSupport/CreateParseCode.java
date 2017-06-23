@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.util.Map;
 
 public class CreateParseCode {
     public static int width = 500;
@@ -45,31 +46,57 @@ public class CreateParseCode {
                 return ;
             }
 
-            //原生成方案（注：此方案在Linux下易在#Result result = formatReader.decode(binaryBitmap, hints);#此句报出ClassNotFoundException异常）
-//            MultiFormatReader formatReader = new MultiFormatReader();
-//            BufferedImage image = ImageIO.read(file);
-//            LuminanceSource source = new BufferedImageLuminanceSource(image);
-//            Binarizer binarizer = new HybridBinarizer(source);
-//            BinaryBitmap binaryBitmap = new BinaryBitmap(binarizer);
-//
-//            Map hints = new HashMap();
-//            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-//            hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
-//            hints.put(DecodeHintType.PURE_BARCODE, Boolean.TRUE);
-//            Result result = formatReader.decode(binaryBitmap, hints);
+            String result_planA = this.parseCode_planA(file);
+            String result_planB = this.parseCode_planB(file);
 
+            if(result_planA == null & result_planB == null) {
+                return ;
+            } else {
+                if(result_planA != null) {
+                    System.out.println("Information : <" + result_planA + ">");
+                }
+
+                if(result_planB != null) {
+                    System.out.println("Error : This qr code can't reader !");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String parseCode_planA(File file) {
+        try {
+            MultiFormatReader formatReader = new MultiFormatReader();
+            BufferedImage image = ImageIO.read(file);
+            LuminanceSource source = new BufferedImageLuminanceSource(image);
+            Binarizer binarizer = new HybridBinarizer(source);
+            BinaryBitmap binaryBitmap = new BinaryBitmap(binarizer);
+
+            Map hints = new HashMap();
+            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+            hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
+            hints.put(DecodeHintType.PURE_BARCODE, Boolean.TRUE);
+            Result result = formatReader.decode(binaryBitmap, hints);
+            return result.getText();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String parseCode_planB(File file) {
+        try {
             BufferedImage bufferedImage = ImageIO.read(file);
             LuminanceSource luminanceSource = new BufferedImageLuminanceSource(bufferedImage);
             BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(luminanceSource));
             QRCodeReader qrCodeReader = new QRCodeReader();
-            try {
-                Result result = qrCodeReader.decode(binaryBitmap);
-                System.out.println("Information : (" + result.getText() + ") .");
-            } catch (ReaderException e) {
-                System.out.println("Error : This qr code can't reader !");
-            }
+            Result result = qrCodeReader.decode(binaryBitmap);
+            return result.getText();
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
 }
