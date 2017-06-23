@@ -22,7 +22,7 @@ public class CreateParseCode {
     public static int height = 500;
     
     public boolean createCode(String text, int width, int height, String path){
-        String format = "png";
+        String format = "jpg";
         HashMap hints = new HashMap();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");                      //内容所使用编码
         try {

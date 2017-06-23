@@ -1,14 +1,7 @@
 package cn.cslg.ReservationVerify.QR_CodeSupport;
 
-import com.google.zxing.Result;
-import com.google.zxing.Binarizer;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.LuminanceSource;
+import com.google.zxing.*;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.HybridBinarizer;
 
 import java.io.File;
@@ -25,6 +18,8 @@ public class CreateParseCode {
         String format = "png";
         HashMap hints = new HashMap();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");                      //内容所使用编码
+        hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
+        hints.put(DecodeHintType.PURE_BARCODE, Boolean.TRUE);
         try {
             BitMatrix bitMatrix = new MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE, width, height, hints);
             File outputFile = new File(path);
@@ -50,6 +45,8 @@ public class CreateParseCode {
 
             Map hints = new HashMap();
             hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+            hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
+            hints.put(DecodeHintType.PURE_BARCODE, Boolean.TRUE);
             Result result = formatReader.decode(binaryBitmap, hints);
             return result.getText();
         } catch (Exception e) {

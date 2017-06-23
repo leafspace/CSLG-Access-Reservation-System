@@ -2,7 +2,6 @@ package cn.cslg.CSLGAccessReservationSystem.LocalServer;
 
 import cn.cslg.CSLGAccessReservationSystem.ServerBean.*;
 
-
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.io.IOException;
@@ -114,6 +113,7 @@ public class ReservationActivityServlet extends HttpServlet {
         boolean isSuccessed = checkReservationMessage(reservationMessage);
         if(isSuccessed){
             isSuccessed = user.reservationActivityRoom(reservationMessage);
+            reservationMessage.CreateQrCodes();
         }
         if(isSuccessed) {
             System.out.println("Info (Reservation activity servlet) : The " + user.getUserName() + " reservation " + activity_room.room_name + " successfully !");
@@ -127,7 +127,7 @@ public class ReservationActivityServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        doGet(request,response);
+        doGet(request, response);
     }
     
     /**
@@ -136,8 +136,8 @@ public class ReservationActivityServlet extends HttpServlet {
      */
     public int getIntTime(String time) {
         int newTime;
-        String tmpStr="";
-        if(time.length()>0){
+        String tmpStr = "";
+        if(time.length() > 0) {
             for(int i = 0; i < time.length(); i++){
                 String tmp = "" + time.charAt(i);
                 if((tmp).matches("[0-9.]")) {

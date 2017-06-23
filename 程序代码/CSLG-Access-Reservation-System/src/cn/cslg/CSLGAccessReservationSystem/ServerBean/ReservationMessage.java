@@ -107,7 +107,7 @@ public class ReservationMessage {
         }
 
         //Todo 通过id确定一个唯一的存放二维码的路径
-        this.qr_location = "qr_img/qr" + this.reservation_id + ".png";
+        this.qr_location = "D:/qr_img/qr" + this.reservation_id + ".jpg";
 
         CreateParseCode cpCode = new CreateParseCode();
         String qr_information = "CSLG-AccessReservationSystem&reservation_id=" + this.reservation_id;

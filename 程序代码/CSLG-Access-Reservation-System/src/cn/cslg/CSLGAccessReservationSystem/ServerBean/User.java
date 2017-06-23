@@ -92,7 +92,7 @@ public class User {
 
     public void getDataFromDatabase(String user_id) {
         DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
-        String sql = "SELECT * FROM Users WHERE user_id = '" + user_id + "'and is_manager=0;";
+        String sql = "SELECT * FROM Users WHERE user_id = '" + user_id + "'and is_manager = 0;";
         dbSqlServerConnection.getPstmt(sql);
         ResultSet resultSet = dbSqlServerConnection.query();
         try{

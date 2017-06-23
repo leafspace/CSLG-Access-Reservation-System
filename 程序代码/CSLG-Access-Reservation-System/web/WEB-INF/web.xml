@@ -3,31 +3,27 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    <!--
+        此处意义不明
+        <filter>
+            <filter-name>LoginFilter</filter-name>
+            <filter-class>cn.cslg.CSLGAccessReservationSystem.Filter.LoginFilter</filter-class>
 
+            <init-param>
+                <param-name>LOGIN_URI</param-name>
+                <param-value>/index.jsp</param-value>
+            </init-param>
+        </filter>
+        <filter-mapping>
+            <filter-name>LoginFilter</filter-name>
+            <url-pattern>*.jsp</url-pattern>
+        </filter-mapping>
 
-
-
-
-    <filter>
-        <filter-name>LoginFilter</filter-name>
-        <filter-class>cn.cslg.CSLGAccessReservationSystem.Filter.LoginFilter</filter-class>
-
-        <init-param>
-            <param-name>LOGIN_URI</param-name>
-            <param-value>/index.jsp</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>LoginFilter</filter-name>
-        <url-pattern>*.jsp</url-pattern>
-    </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>LoginFilter</filter-name>
-        <url-pattern>/LocalServer/*</url-pattern>
-    </filter-mapping>
-
-
+        <filter-mapping>
+            <filter-name>LoginFilter</filter-name>
+            <url-pattern>/LocalServer/*</url-pattern>
+        </filter-mapping>
+    -->
 
     <servlet>
         <servlet-name>doLogin</servlet-name>

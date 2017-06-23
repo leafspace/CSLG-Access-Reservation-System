@@ -1,9 +1,9 @@
 <%--
-Created by IntelliJ IDEA.
-User: Administrator
-Date: 2017/4/14
-Time: 21:00
-To change this template use File | Settings | File Templates.
+    Created by IntelliJ IDEA.
+    User: Administrator
+    Date: 2017/4/14
+    Time: 21:00
+    To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -18,7 +18,7 @@ To change this template use File | Settings | File Templates.
     </head>
     <body>
         <%
-                String errorInfo=(String)request.getParameter("errorInfo");
+            String errorInfo = request.getParameter("errorInfo");
         %>
         <h1>常熟理工学院二维码门禁预约系统<sup>V1.0</sup></h1>
         <div class="login" style="margin-top:50px;">
@@ -32,13 +32,12 @@ To change this template use File | Settings | File Templates.
 
             <div>
                 <%
-                    if(errorInfo!=null){
-               %>   
-               <p><%=errorInfo%></p> 
-               <%   
+                    if(errorInfo != null) {
+                %>
+                    <p><%=errorInfo%></p>
+                <%
                     }
-               %>
-               
+                %>
             </div>
             <div class="web_qr_login" id="web_qr_login" style="display: block; height: 235px;">
                 <!--登录-->
