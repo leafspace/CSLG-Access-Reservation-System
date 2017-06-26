@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="WeChat Publish:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/WeChat_Publish_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="WeChat Publish/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="WeChat Publish" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="$PROJECT_DIR$/lib/javax.json.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jackson-xc-1.8.3.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/json-lib-2.4-jdk15.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jackson-jaxrs-1.8.3.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jackson-core-asl-1.9.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/jackson-mapper-asl-1.9.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/dom4j/dom4j-1.6.1.jar" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

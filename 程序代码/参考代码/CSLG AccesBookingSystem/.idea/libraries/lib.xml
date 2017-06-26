@@ -1,10 +1,10 @@
 <component name="libraryTable">
   <library name="lib">
     <CLASSES>
-      <root url="file://C:/Program Files (x86)/Web Server/apache-tomcat-9.0.0.M13/lib" />
+      <root url="file://C:/Program Files (x86)/JetBrains/Support/J2EE Server Apache Tomcat/x64/apache-tomcat-9.0.0.M13/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
-    <jarDirectory url="file://C:/Program Files (x86)/Web Server/apache-tomcat-9.0.0.M13/lib" recursive="false" />
+    <jarDirectory url="file://C:/Program Files (x86)/JetBrains/Support/J2EE Server Apache Tomcat/x64/apache-tomcat-9.0.0.M13/lib" recursive="false" />
   </library>
 </component>

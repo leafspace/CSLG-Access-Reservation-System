@@ -19,15 +19,6 @@
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="file://C:/Program Files (x86)/Web Server/Tomcat x64/apache-tomcat-9.0.0.M17/lib" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://C:/Program Files (x86)/Web Server/Tomcat x64/apache-tomcat-9.0.0.M17/lib" recursive="false" />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.0.M19" level="application_server_libraries" />
   </component>
 </module>
