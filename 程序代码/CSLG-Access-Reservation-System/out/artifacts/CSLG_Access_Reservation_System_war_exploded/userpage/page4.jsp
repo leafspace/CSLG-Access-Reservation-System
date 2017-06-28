@@ -278,7 +278,8 @@
               }
                h+='</tr><tr><td>二维码</td>'
               for(i=start;i<end;i++){
-                  h+='<td>'+ list[i]['qr_location'] +'</td>';
+                  //h+='<td>'+ list[i]['qr_location'] +'</td>';
+                  h+='<td><a href="' + list[i]['qr_location'] + '"><img src="' + list[i]['qr_location'] + '" style="width:50px; height:50px;"/></a></td>';
               }
                h+='</tr><tr><td>取消预约</td>'
               for(i=start;i<end;i++){
