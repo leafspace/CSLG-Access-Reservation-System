@@ -77,6 +77,29 @@ public class ReservationActivityServlet extends HttpServlet {
         return true;
     }
 
+    public void writeReservationMessageQrLoacation(ReservationMessage reservationMessage) {
+        DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
+        dbSqlServerConnection.getPstmt("SELECT reservation_id FROM Reservations WHERE user_id = " + reservationMessage.user.getUserID()
+                + " AND room_id = " + reservationMessage.room.room_id + " AND year = " + reservationMessage.time.year + " AND month = "
+                + reservationMessage.time.month + " AND day = " + reservationMessage.time.day + " AND start = " + reservationMessage.time.start
+                + " AND finish = " + reservationMessage.time.finish + ";");
+        ResultSet resultSet = dbSqlServerConnection.query();
+        try {
+            if(resultSet.next()) {
+                reservationMessage.reservation_id = resultSet.getString(1);
+                dbSqlServerConnection.getPstmt("UPDATE Reservations SET qr_location = '../qr_img/qr"
+                        + reservationMessage.reservation_id + ".jpg' WHERE reservation_Id = " + reservationMessage.reservation_id + ";");
+                dbSqlServerConnection.update();
+            } else {
+                return ;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbSqlServerConnection.allClose();
+        }
+    }
+
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         User user = null;
@@ -110,12 +133,12 @@ public class ReservationActivityServlet extends HttpServlet {
         }
 
         ReservationMessage reservationMessage = new ReservationMessage(user, activity_room, time, isValid, isLock, information);
-        boolean isSuccessed = checkReservationMessage(reservationMessage);
-        if(isSuccessed){
+        boolean isSuccessed = this.checkReservationMessage(reservationMessage);
+        if(isSuccessed) {
             isSuccessed = user.reservationActivityRoom(reservationMessage);
-            reservationMessage.CreateQrCodes();
         }
         if(isSuccessed) {
+            this.writeReservationMessageQrLoacation(reservationMessage);
             System.out.println("Info (Reservation activity servlet) : The " + user.getUserName() + " reservation " + activity_room.room_name + " successfully !");
         } else {
             System.out.println("Error (Reservation activity servlet) : The " + user.getUserName() + " reservation " + activity_room.room_name + " failed !");

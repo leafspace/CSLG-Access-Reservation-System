@@ -107,11 +107,12 @@ public class ReservationMessage {
         }
 
         //Todo 通过id确定一个唯一的存放二维码的路径
-        this.qr_location = "D:/qr_img/qr" + this.reservation_id + ".jpg";
+        final String Qr_location = "F:\\Project Engineering\\CSLG AccessReservationSystem\\程序代码\\CSLG-Access-Reservation-System\\web\\qr_img\\";
+        String qr_location = Qr_location + "qr" + this.reservation_id + ".jpg";
 
         CreateParseCode cpCode = new CreateParseCode();
         String qr_information = "二维码预约系统" + this.reservation_id;
-        boolean isSuccess = cpCode.createCode(qr_information, CreateParseCode.width, CreateParseCode.height, this.qr_location);
+        boolean isSuccess = cpCode.createCode(qr_information, CreateParseCode.width, CreateParseCode.height, qr_location);
         if(!isSuccess) {
             System.out.println("Error (Create qr code) : The No." + this.reservation_id + " reservation message create qr code ('" + this.qr_location + "') failed !");
             return null;
