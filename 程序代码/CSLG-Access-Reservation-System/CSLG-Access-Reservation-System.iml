@@ -25,8 +25,11 @@
           <root url="file://$MODULE_DIR$/support" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/support" />
+        </SOURCES>
         <jarDirectory url="file://$MODULE_DIR$/support" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/support" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.0.M19" level="application_server_libraries" />
