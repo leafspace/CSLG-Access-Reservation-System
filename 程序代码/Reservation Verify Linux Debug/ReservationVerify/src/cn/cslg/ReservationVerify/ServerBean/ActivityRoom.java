@@ -29,10 +29,10 @@ public class ActivityRoom {
     }
 
     public void getDataFromDatabase(String room_id) {
-        DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
+        DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
         String sql = "SELECT * FROM ActivityRooms WHERE room_Id = '" + room_id + "';";
-        dbSqlServerConnection.getPstmt(sql);
-        ResultSet resultSet = dbSqlServerConnection.query();
+        DBMySQLConnection.getPstmt(sql);
+        ResultSet resultSet = DBMySQLConnection.query();
         try{
             while(resultSet != null & resultSet.next()){
                 this.room_id = resultSet.getString(1);
@@ -44,7 +44,7 @@ public class ActivityRoom {
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
-            dbSqlServerConnection.allClose();
+            DBMySQLConnection.allClose();
         }
     }
 }

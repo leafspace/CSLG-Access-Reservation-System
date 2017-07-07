@@ -16,7 +16,7 @@ import java.sql.*;
  * 		5: 关闭数据库相关操作
  */
 public class DBSqlServerConnection {
-    private static String ip = "192.168.198.129";
+    private static String ip = "127.0.0.1";
     private static int port = 1094;                                            //端口号
     private static String databaseName = "CSLG_Access_reservation_system";     //数据库名
     private static String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";   //驱动名
@@ -137,5 +137,4 @@ public class DBSqlServerConnection {
             }
         }
     }
-
 }

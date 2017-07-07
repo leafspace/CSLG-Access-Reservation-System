@@ -26,6 +26,7 @@
 	<classpathentry kind="lib" path="lib/qrcode.jar"/>
 	<classpathentry kind="lib" path="lib/sqljdbc41.jar"/>
 	<classpathentry kind="lib" path="lib/sqljdbc42.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.18-bin.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-8-oracle-arm32-vfp-hflt"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

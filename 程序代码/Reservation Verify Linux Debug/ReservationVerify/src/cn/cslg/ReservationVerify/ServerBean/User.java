@@ -91,10 +91,10 @@ public class User {
     }
 
     public void getDataFromDatabase(String user_id) {
-        DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
+        DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
         String sql = "SELECT * FROM Users WHERE user_id = '" + user_id + "'and is_manager=0;";
-        dbSqlServerConnection.getPstmt(sql);
-        ResultSet resultSet = dbSqlServerConnection.query();
+        DBMySQLConnection.getPstmt(sql);
+        ResultSet resultSet = DBMySQLConnection.query();
         try{
             while(resultSet != null & resultSet.next()){
                 
@@ -111,7 +111,7 @@ public class User {
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
-           dbSqlServerConnection.allClose();
+           DBMySQLConnection.allClose();
         }
     }
 
@@ -128,24 +128,24 @@ public class User {
             return false;
         }
 
-        DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
+        DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
         String sql = "UPDATE Users SET password = '" + this.password + "', wechat_id = '" + this.wechat_id + "', phone_number = '" + this.phone_number + "', " +
                 "identity_number = '" + this.identity_number + "', information = '" + this.information +"' where user_id='"+this.user_id+ "';";
-        dbSqlServerConnection.getPstmt(sql);
-        dbSqlServerConnection.update();
-        dbSqlServerConnection.allClose();
+        DBMySQLConnection.getPstmt(sql);
+        DBMySQLConnection.update();
+        DBMySQLConnection.allClose();
         return true;
     }
 
     public ArrayList<ReservationMessage> queryRoomUsage(Time time, ActivityRoom activity_room) {   //查询某个活动室的预约情况
        
         ArrayList<ReservationMessage> reservationMessages = new ArrayList<ReservationMessage>();
-        DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
+        DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
         
         String sql = "SELECT reservation_Id FROM Reservations WHERE room_id = '" + activity_room.room_id + "' and valid = 1 and year = " + time.year + " and month = "
                 + time.month +";";
-        dbSqlServerConnection.getPstmt(sql);
-        ResultSet resultSet = dbSqlServerConnection.query();
+        DBMySQLConnection.getPstmt(sql);
+        ResultSet resultSet = DBMySQLConnection.query();
         
          
         try{
@@ -156,17 +156,17 @@ public class User {
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
-            dbSqlServerConnection.allClose();
+            DBMySQLConnection.allClose();
         }
         return reservationMessages;
     }
 
     public ArrayList<ReservationMessage> queryReservation() {
         ArrayList<ReservationMessage> reservationMessages = new ArrayList<ReservationMessage>();
-        DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
+        DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
         String sql = "SELECT reservation_Id FROM Reservations WHERE user_id = " + this.user_id + ";";
-        dbSqlServerConnection.getPstmt(sql);
-        ResultSet resultSet = dbSqlServerConnection.query();
+        DBMySQLConnection.getPstmt(sql);
+        ResultSet resultSet = DBMySQLConnection.query();
         try{
             while(resultSet != null & resultSet.next()){
                 ReservationMessage reservationMessage = new ReservationMessage(resultSet.getString(1));
@@ -175,17 +175,17 @@ public class User {
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
-            dbSqlServerConnection.allClose();
+            DBMySQLConnection.allClose();
         }
         return reservationMessages;
     }
 
     public ArrayList<ActivityRoom> queryAllRooms() {
         ArrayList<ActivityRoom> activityRooms = new ArrayList<ActivityRoom>();
-        DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
+        DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
         String sql = "SELECT room_id FROM ActivityRooms;";
-        dbSqlServerConnection.getPstmt(sql);
-        ResultSet resultSet = dbSqlServerConnection.query();
+        DBMySQLConnection.getPstmt(sql);
+        ResultSet resultSet = DBMySQLConnection.query();
         try{
             while(resultSet != null & resultSet.next()){
                 ActivityRoom activityRoom = new ActivityRoom(resultSet.getString(1));
@@ -194,7 +194,7 @@ public class User {
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
-            dbSqlServerConnection.allClose();
+            DBMySQLConnection.allClose();
         }
         return activityRooms;
     }
@@ -204,14 +204,14 @@ public class User {
             return false;
         }
 
-        DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
+        DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
         String sql = "INSERT INTO Reservations(user_id, room_id, valid, lock, year, month, day, start, finish, qr_location, information) values(" + this.user_id +
                 ", " + reservation_message.room.room_id + ", " + (this.is_temporary ? 0 : 1) + ", 0, " + reservation_message.time.year + ", " + reservation_message.time.month +
                 ", " + reservation_message.time.day + ", " + reservation_message.time.start + ", " + reservation_message.time.finish + ", '" + reservation_message.qr_location +
                 "', '" + reservation_message.information + "');";
-        dbSqlServerConnection.getPstmt(sql);
-        dbSqlServerConnection.update();
-        dbSqlServerConnection.allClose();
+        DBMySQLConnection.getPstmt(sql);
+        DBMySQLConnection.update();
+        DBMySQLConnection.allClose();
          return true;
     }
 }

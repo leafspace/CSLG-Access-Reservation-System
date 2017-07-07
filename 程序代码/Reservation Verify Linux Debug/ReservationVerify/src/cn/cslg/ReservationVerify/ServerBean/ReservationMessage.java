@@ -52,10 +52,10 @@ public class ReservationMessage {
     }
 
     public void getDataFromDatabase(String reservation_id) {
-        DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
+        DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
         String sql = "SELECT * FROM Reservations WHERE reservation_Id = '" + reservation_id + "';";
-        dbSqlServerConnection.getPstmt(sql);
-        ResultSet resultSet = dbSqlServerConnection.query();
+        DBMySQLConnection.getPstmt(sql);
+        ResultSet resultSet = DBMySQLConnection.query();
         try{
             while(resultSet != null & resultSet.next()){
                 this.reservation_id = resultSet.getString(1);
@@ -72,7 +72,7 @@ public class ReservationMessage {
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
-            dbSqlServerConnection.allClose();
+            DBMySQLConnection.allClose();
         }
     }
 
@@ -90,10 +90,10 @@ public class ReservationMessage {
     * */
     public String CreateQrCodes() {
         //Todo 确定预约消息对应数据库中唯一的id
-        DBSqlServerConnection dbSqlServerConnection = new DBSqlServerConnection();
-        dbSqlServerConnection.getPstmt("SELECT reservation_id FROM Reservations WHERE user_id = " + user.getUserID() + " AND room_id = " + room.room_id + " AND year = " +
+        DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
+        DBMySQLConnection.getPstmt("SELECT reservation_id FROM Reservations WHERE user_id = " + user.getUserID() + " AND room_id = " + room.room_id + " AND year = " +
                 time.year + " AND month = " + time.month + " AND day = " + time.day + " AND start = " + time.start + " AND finish = " + time.finish + ";");
-        ResultSet resultSet = dbSqlServerConnection.query();
+        ResultSet resultSet = DBMySQLConnection.query();
         try {
             if(resultSet.next()) {
                 this.reservation_id = resultSet.getString(1);
@@ -103,7 +103,7 @@ public class ReservationMessage {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            dbSqlServerConnection.allClose();
+            DBMySQLConnection.allClose();
         }
 
         //Todo 通过id确定一个唯一的存放二维码的路径
