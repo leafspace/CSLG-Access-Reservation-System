@@ -2,7 +2,7 @@
   <configuration default="false" name="Apache Tomcat Server 9.0.0.M19" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.0.M191" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="C:\Program Files\Java\jdk1.8.0_121\jre">
     <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
     <deployment>
-      <artifact name="CSLG-Access-Reservation-System:war exploded">
+      <artifact name="ReservationSystem">
         <settings>
           <option name="CONTEXT_PATH" value="/" />
         </settings>
@@ -68,7 +68,7 @@
     </ConfigurationWrapper>
     <method>
       <option name="BuildArtifacts" enabled="true">
-        <artifact name="CSLG-Access-Reservation-System:war exploded" />
+        <artifact name="ReservationSystem" />
       </option>
     </method>
   </configuration>
