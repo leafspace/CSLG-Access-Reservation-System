@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts-config PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+        "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+    <form-beans>
+        <form-bean name="loginActionForm" type="cn.cslg.CSLGAccessReservationSystem.ActionForm.LoginActionForm" />
+        <form-bean name="reserActionForm" type="cn.cslg.CSLGAccessReservationSystem.ActionForm.ReservationActionForm" />
+        <form-bean name="lockActionForm" type="cn.cslg.CSLGAccessReservationSystem.ActionForm.LockActionForm" />
+        <form-bean name="delockActionForm" type="cn.cslg.CSLGAccessReservationSystem.ActionForm.DelockActionForm" />
+    </form-beans>
+    <action-mappings>
+        <action path="/login" type="cn.cslg.CSLGAccessReservationSystem.Action.LoginAction" name="loginActionForm" scope="request">
+            <forward name="managerPage" path="/lock_main.jsp" />
+            <forward name="userPage" path="/rese_main.jsp" />
+            <forward name="error" path="/error.jsp" />
+        </action>
+
+        <action path="/reservation" type="cn.cslg.CSLGAccessReservationSystem.Action.ReservationAction" name="reserActionForm" scope="request">
+            <forward name="rese_main" path="/rese_main.jsp" />
+            <forward name="error" path="/error.jsp" />
+        </action>
+
+        <action path="/lock" type="cn.cslg.CSLGAccessReservationSystem.Action.LockAction" name="lockActionForm" scope="request">
+            <forward name="lock_main" path="/lock_main.jsp" />
+            <forward name="error" path="/error.jsp" />
+        </action>
+
+        <action path="/deLock" type="cn.cslg.CSLGAccessReservationSystem.Action.DelockAction" name="delockActionForm" scope="request">
+            <forward name="lock_main" path="/lock_main.jsp" />
+        </action>
+    </action-mappings>
+</struts-config>

@@ -67,9 +67,7 @@
       </SHUTDOWN>
     </ConfigurationWrapper>
     <method>
-      <option name="BuildArtifacts" enabled="true">
-        <artifact name="ReservationSystem" />
-      </option>
+      <option name="BuildArtifacts" enabled="true" />
     </method>
   </configuration>
 </component>

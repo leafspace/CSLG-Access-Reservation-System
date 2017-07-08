@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="struts-1.2.x">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/WeChat_Phone/lib/commons-logging.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WeChat_Phone/lib/commons-fileupload.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WeChat_Phone/lib/oro.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WeChat_Phone/lib/commons-validator.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WeChat_Phone/lib/commons-digester.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WeChat_Phone/lib/commons-beanutils.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WeChat_Phone/lib/antlr.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WeChat_Phone/lib/struts.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
