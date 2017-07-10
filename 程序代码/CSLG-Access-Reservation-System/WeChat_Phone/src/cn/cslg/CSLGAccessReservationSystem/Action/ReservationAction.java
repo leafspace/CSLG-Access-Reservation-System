@@ -174,6 +174,7 @@ public class ReservationAction extends Action {
         boolean isSuccessed = this.checkReservationMessage(reservationMessage);
         if(isSuccessed) {
             isSuccessed = user.reservationActivityRoom(reservationMessage);
+            reservationMessage.CreateQrCodes();
         } else {
             return mapping.findForward("error");
         }

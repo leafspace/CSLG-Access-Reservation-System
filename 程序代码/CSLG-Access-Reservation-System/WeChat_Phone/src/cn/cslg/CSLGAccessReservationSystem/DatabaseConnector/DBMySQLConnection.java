@@ -16,9 +16,9 @@ import java.sql.*;
  * 		5: 关闭数据库相关操作
  */
 public class DBMySQLConnection {
-	private static String ip = "192.168.198.129";
+	private static String ip = "127.0.0.1";
     private static int port = 3306;                                            //端口号
-    private static String databaseName = "cslg_access_reservation_system";     //数据库名
+    private static String databaseName = "CSLG_Access_reservation_system";     //数据库名
     private static String driverName = "com.mysql.jdbc.Driver";                //驱动名
     private static String userName = "root";                                   //用户名    注：要修改
     private static String password = "123456";                                 //密码      注：要修改

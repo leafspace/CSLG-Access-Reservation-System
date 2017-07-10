@@ -12,6 +12,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link href="css/font-awesome.css" rel="stylesheet">
+        <link rel="shortcut icon" href="door-icons.ico" type="image/x-icon"/>
 		<link href="css/r-style.css" rel="stylesheet" type="text/css" media="all" />
 		<script src="js/jquery-2.2.3.min.js"></script>
         <script type="application/x-javascript">
