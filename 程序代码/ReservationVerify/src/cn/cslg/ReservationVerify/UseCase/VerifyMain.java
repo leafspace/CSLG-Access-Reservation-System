@@ -2,6 +2,7 @@ package cn.cslg.ReservationVerify.UseCase;
 
 import cn.cslg.ReservationVerify.QR_CodeSupport.CreateParseCode;
 import cn.cslg.ReservationVerify.ServerBean.ReservationMessage;
+import cn.cslg.ReservationVerify.ServerBean.SocketThread;
 import cn.cslg.ReservationVerify.ServerBean.Time;
 
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
@@ -16,7 +17,7 @@ import java.util.Calendar;
 
 /**
  * Created by leafspace on 2017/6/20.
- * LastEdit: 2017-6-21
+ * LastEdit: 2017-8-15
  * Contact me:
  *     Phone: 18852923073
  *     E-mail: 18852923073@163.com
@@ -94,7 +95,7 @@ public class VerifyMain {
     public static void OpenDoor(GpioPinDigitalOutput doorController) {
         doorController.setState(PinState.LOW);
         try {
-            Thread.sleep(3000);
+            Thread.sleep(5000);
         } catch (InterruptedException exception) {
             exception.printStackTrace();
         } finally {
@@ -103,14 +104,14 @@ public class VerifyMain {
     }
 
     public static void main(String[] args) {
-
         boolean isSuccess = true;
+        final SocketThread socketThread = new SocketThread();
         final GpioController gpioController = GpioFactory.getInstance();
         final GpioPinDigitalOutput doorController = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyControl", PinState.HIGH);
         doorController.setShutdownOptions(true, PinState.LOW);
+        socketThread.run();
 
         while (true) {
-        	isSuccess = true;
             isSuccess = TakePhoto();
             if (!isSuccess) {
                 System.out.println("Error : System hava a error in take photo !");
@@ -124,6 +125,12 @@ public class VerifyMain {
                     System.out.println("Information : (" + reservationID + ") Open the door !");
                     OpenDoor(doorController);
                 }
+            }
+
+            if (socketThread.getIndex() > 0) {
+                System.out.println("Information : Manager Open the door !");
+                OpenDoor(doorController);
+                socketThread.freeIndex();
             }
         }
         //gpioController.shutdown();

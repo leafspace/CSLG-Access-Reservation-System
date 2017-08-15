@@ -27,7 +27,11 @@
     %>
     <body class="templatemo-bg-gray">
         <h1>锁定列表</h1>
-        <h2><a href="lock_info.jsp"><span class="gray">+</span> 新<span class="green">锁定</span></a></h2>
+        <h2>
+            <a href="/open.do"><span class="green">开门</span></a>
+            <span class="gray">|</span>
+            <a href="lock_info.jsp">新<span class="green">锁定</span></a>
+        </h2>
         <div class="container center-block templatemo-form-list-container templatemo-container">
             <div class="col-md-12">
             <table class="table table-striped table-hover">

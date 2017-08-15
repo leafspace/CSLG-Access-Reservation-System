@@ -10,6 +10,7 @@
         <form-bean name="reserActionForm" type="cn.cslg.CSLGAccessReservationSystem.ActionForm.ReservationActionForm" />
         <form-bean name="lockActionForm" type="cn.cslg.CSLGAccessReservationSystem.ActionForm.LockActionForm" />
         <form-bean name="delockActionForm" type="cn.cslg.CSLGAccessReservationSystem.ActionForm.DelockActionForm" />
+        <form-bean name="managerOpenAction" type="cn.cslg.CSLGAccessReservationSystem.ActionForm.ManagerOpen" />
     </form-beans>
     <action-mappings>
         <action path="/login" type="cn.cslg.CSLGAccessReservationSystem.Action.LoginAction" name="loginActionForm" scope="request">
@@ -29,6 +30,9 @@
         </action>
 
         <action path="/deLock" type="cn.cslg.CSLGAccessReservationSystem.Action.DelockAction" name="delockActionForm" scope="request">
+            <forward name="lock_main" path="/lock_main.jsp" />
+        </action>
+        <action path="/open" type="cn.cslg.CSLGAccessReservationSystem.Action.ManagerOpen" name="managerOpenAction" scope="request">
             <forward name="lock_main" path="/lock_main.jsp" />
         </action>
     </action-mappings>
