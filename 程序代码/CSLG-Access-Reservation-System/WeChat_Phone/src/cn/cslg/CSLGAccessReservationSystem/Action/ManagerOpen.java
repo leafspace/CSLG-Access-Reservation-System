@@ -2,7 +2,10 @@ package cn.cslg.CSLGAccessReservationSystem.Action;
 
 import java.net.Socket;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import cn.cslg.CSLGAccessReservationSystem.DatabaseConnector.DBMySQLConnection;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -16,17 +19,33 @@ public class ManagerOpen extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
                                  HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        int index = 0;
         try {
-            Socket socket = new Socket("127.0.0.1", 5209);
-            System.out.println("客户端启动成功");
-            PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
-            printWriter.println("addIndex");
-            printWriter.flush();
-            printWriter.close();
-            socket.close();
+            DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
+            String sql = "SELECT * FROM Open;";
+            DBMySQLConnection.getPstmt(sql);
+            ResultSet resultSet = DBMySQLConnection.query();
+            try{
+                while(resultSet != null & resultSet.next()){
+                    index = resultSet.getInt(1);
+                    break;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                DBMySQLConnection.allClose();
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        index++;
+        DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
+        String sql = "UPDATE Open SET `index` = " + index + ";";
+        DBMySQLConnection.getPstmt(sql);
+        DBMySQLConnection.update();
+        DBMySQLConnection.allClose();
         return mapping.findForward("lock_main");
     }
 }

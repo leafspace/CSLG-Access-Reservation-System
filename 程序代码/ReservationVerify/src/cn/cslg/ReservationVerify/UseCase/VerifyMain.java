@@ -1,8 +1,8 @@
 package cn.cslg.ReservationVerify.UseCase;
 
 import cn.cslg.ReservationVerify.QR_CodeSupport.CreateParseCode;
+import cn.cslg.ReservationVerify.ServerBean.DBMySQLConnection;
 import cn.cslg.ReservationVerify.ServerBean.ReservationMessage;
-import cn.cslg.ReservationVerify.ServerBean.SocketThread;
 import cn.cslg.ReservationVerify.ServerBean.Time;
 
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
@@ -12,6 +12,8 @@ import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 
 import java.io.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Calendar;
 
@@ -23,7 +25,7 @@ import java.util.Calendar;
  *     E-mail: 18852923073@163.com
  */
 public class VerifyMain {
-    private static String path = "/home/pi/qrCode/image.jpg";
+    private static String path = "/tmp/image.jpg";
     private static String[] cmdOrder = {"sh", "-c", "raspistill -w 500 -h 500 -o " + path};
 
     public static boolean TakePhoto() {
@@ -102,15 +104,45 @@ public class VerifyMain {
             doorController.setState(PinState.HIGH);
         }
     }
-
+    
+    public static int getIndexOpen() {
+    	DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
+        String sql = "SELECT * FROM Open;";
+        DBMySQLConnection.getPstmt(sql);
+        ResultSet resultSet = DBMySQLConnection.query();
+        int index = -1;
+        try{
+            while(resultSet != null & resultSet.next()){
+                index = resultSet.getInt(1);
+                break;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+           DBMySQLConnection.allClose();
+        }
+        return index;
+    }
+    
+    public static void freeIndexOpen() {
+    	int index = getIndexOpen();
+    	if (index <= 0) {
+    		return ;
+    	}
+    	index--;
+    	DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
+        String sql = "UPDATE Open SET `index` = " + index + ";";
+        DBMySQLConnection.getPstmt(sql);
+        DBMySQLConnection.update();
+        DBMySQLConnection.allClose();
+    }
+    
     public static void main(String[] args) {
         boolean isSuccess = true;
-        final SocketThread socketThread = new SocketThread();
         final GpioController gpioController = GpioFactory.getInstance();
         final GpioPinDigitalOutput doorController = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyControl", PinState.HIGH);
         doorController.setShutdownOptions(true, PinState.LOW);
-        socketThread.run();
-
+        
         while (true) {
             isSuccess = TakePhoto();
             if (!isSuccess) {
@@ -127,12 +159,11 @@ public class VerifyMain {
                 }
             }
 
-            if (socketThread.getIndex() > 0) {
+            if (getIndexOpen() > 0) {
                 System.out.println("Information : Manager Open the door !");
                 OpenDoor(doorController);
-                socketThread.freeIndex();
+                freeIndexOpen();
             }
         }
-        //gpioController.shutdown();
     }
 }

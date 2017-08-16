@@ -1,20 +1,22 @@
-//vncserver创建一个显示用户
-tightvncserver -geometry 1920x1080 :1
-
-//设置当前日期
-sudo date --s="2017-06-23 11:44:00"
-
-//设置当前使用的java版本
-sudo update-alternatives --config java
-
-//编译一个带库的文件
 javac -classpath .:classes:/opt/pi4j/lib/'*' -d . untitled.java
-//运行一个带库的项目
+
 sudo java -classpath .:classes:/opt/pi4j/lib/'*' untitled
 
-//创建一个vlc视频流
+
 sudo raspivid -o - -t 0 -w 640 -h 360 -fps 25|cvlc -vvv stream:///dev/stdin --sout '#standard{access=http,mux=ts,dst=:8090}' :demux=h264
 
-//运行一个打包好的java项目
+sudo date --s="2017-06-23 11:44:00"
+
+
+sudo update-alternatives --config java
+
 java -jar ReservationVerify.jar
 
+
+tightvncserver -geometry 1920x1080 :1
+
+
+sudo /etc/init.d/nginx start
+
+sudo nohup /home/pi/app/tomcat/TomcatServer6.0/bin/startup.sh
+sudo sh /home/pi/app/tomcat/TomcatServer6.0/bin/shutdown.sh

@@ -28,7 +28,7 @@
     <body class="templatemo-bg-gray">
         <h1>锁定列表</h1>
         <h2>
-            <a href="/open.do"><span class="green">开门</span></a>
+            <a href="open.do"><span class="green">开门</span></a>
             <span class="gray">|</span>
             <a href="lock_info.jsp">新<span class="green">锁定</span></a>
         </h2>
