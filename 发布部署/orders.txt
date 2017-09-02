@@ -1,22 +1,38 @@
 javac -classpath .:classes:/opt/pi4j/lib/'*' -d . untitled.java
 
+
 sudo java -classpath .:classes:/opt/pi4j/lib/'*' untitled
 
 
-sudo raspivid -o - -t 0 -w 640 -h 360 -fps 25|cvlc -vvv stream:///dev/stdin --sout '#standard{access=http,mux=ts,dst=:8090}' :demux=h264
+
+
+sudo raspivid -o - -t 0 -w 640 -h 360 -fps 25|cvlc -vvv 
+stream:///dev/stdin --sout '#standard{access=http,mux=ts,dst=:8090}' :demux=h264
+
+
 
 sudo date --s="2017-06-23 11:44:00"
 
 
+
+
 sudo update-alternatives --config java
 
+
 java -jar ReservationVerify.jar
+
+
 
 
 tightvncserver -geometry 1920x1080 :1
 
 
+
+
 sudo /etc/init.d/nginx start
 
+
+
 sudo nohup /home/pi/app/tomcat/TomcatServer6.0/bin/startup.sh
+
 sudo sh /home/pi/app/tomcat/TomcatServer6.0/bin/shutdown.sh

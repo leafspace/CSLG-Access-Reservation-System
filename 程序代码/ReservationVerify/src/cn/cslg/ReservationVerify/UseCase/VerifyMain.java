@@ -1,19 +1,15 @@
 package cn.cslg.ReservationVerify.UseCase;
 
 import cn.cslg.ReservationVerify.QR_CodeSupport.CreateParseCode;
-import cn.cslg.ReservationVerify.ServerBean.DBMySQLConnection;
 import cn.cslg.ReservationVerify.ServerBean.ReservationMessage;
 import cn.cslg.ReservationVerify.ServerBean.Time;
 
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
-import com.pi4j.io.gpio.GpioController;
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.PinState;
-import com.pi4j.io.gpio.RaspiPin;
+import cn.cslg.ReservationVerify.Thread.WechatListenThread;
+import cn.cslg.ReservationVerify.Thread.ButtonListenThread;
+import cn.cslg.ReservationVerify.Thread.TakePhotoThread;
+import com.pi4j.io.gpio.*;
 
 import java.io.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.Calendar;
 
@@ -25,29 +21,8 @@ import java.util.Calendar;
  *     E-mail: 18852923073@163.com
  */
 public class VerifyMain {
-    private static String path = "/tmp/image.jpg";
-    private static String[] cmdOrder = {"sh", "-c", "raspistill -w 500 -h 500 -o " + path};
-
-    public static boolean TakePhoto() {
-        try {
-            Process process = Runtime.getRuntime().exec(cmdOrder);
-            process.waitFor();
-            InputStream inputStream = process.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String line = null;
-            while((line = bufferedReader.readLine()) != null) {
-                System.out.println("Information : (Take photo) " + line);
-            }
-        } catch (InterruptedException exception) {
-            return false;
-        } catch (IOException exception) {
-            return false;
-        }
-        return true;
-    }
-
     public static String ExplainQrCodes() {
-        File file = new File(path);
+        File file = new File(TakePhotoThread.path);
         String qrInfo = new CreateParseCode().parseCode(file);
         if (qrInfo == null) {
             System.out.println("Information : (" + qrInfo + ") 这个二维码无法识别!");
@@ -105,46 +80,23 @@ public class VerifyMain {
         }
     }
     
-    public static int getIndexOpen() {
-    	DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
-        String sql = "SELECT * FROM Open;";
-        DBMySQLConnection.getPstmt(sql);
-        ResultSet resultSet = DBMySQLConnection.query();
-        int index = -1;
-        try{
-            while(resultSet != null & resultSet.next()){
-                index = resultSet.getInt(1);
-                break;
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }finally {
-           DBMySQLConnection.allClose();
-        }
-        return index;
-    }
-    
-    public static void freeIndexOpen() {
-    	int index = getIndexOpen();
-    	if (index <= 0) {
-    		return ;
-    	}
-    	index--;
-    	DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
-        String sql = "UPDATE Open SET `index` = " + index + ";";
-        DBMySQLConnection.getPstmt(sql);
-        DBMySQLConnection.update();
-        DBMySQLConnection.allClose();
-    }
-    
     public static void main(String[] args) {
-        boolean isSuccess = true;
+        boolean isSuccess;
+        TakePhotoThread takePhotoThread = new TakePhotoThread();
+        WechatListenThread wechatListenThread = new WechatListenThread();
+        ButtonListenThread buttonListenThread = new ButtonListenThread();
+        wechatListenThread.start();
         final GpioController gpioController = GpioFactory.getInstance();
         final GpioPinDigitalOutput doorController = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyControl", PinState.HIGH);
+        final GpioPinDigitalInput buttonController = gpioController.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_DOWN);
+
         doorController.setShutdownOptions(true, PinState.LOW);
-        
+        buttonController.setShutdownOptions(true);
+        buttonController.addListener(buttonListenThread);
+
+        takePhotoThread.start();
         while (true) {
-            isSuccess = TakePhoto();
+            isSuccess = takePhotoThread.threadRunning;
             if (!isSuccess) {
                 System.out.println("Error : System hava a error in take photo !");
                 continue;
@@ -156,13 +108,21 @@ public class VerifyMain {
                 if (isSuccess) {
                     System.out.println("Information : (" + reservationID + ") Open the door !");
                     OpenDoor(doorController);
+                    continue;
                 }
             }
 
-            if (getIndexOpen() > 0) {
+            if (wechatListenThread.open) {
                 System.out.println("Information : Manager Open the door !");
+                wechatListenThread.freeIndexOpen();
                 OpenDoor(doorController);
-                freeIndexOpen();
+                continue;
+            }
+
+            if (buttonListenThread.open) {
+                System.out.println("Information : Button Open the door !");
+                buttonListenThread.open = false;
+                OpenDoor(doorController);
             }
         }
     }
