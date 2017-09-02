@@ -21,20 +21,20 @@ import java.util.Calendar;
  *     E-mail: 18852923073@163.com
  */
 public class VerifyMain {
-    public static String ExplainQrCodes() {
-        File file = new File(TakePhotoThread.path);
-        String qrInfo = new CreateParseCode().parseCode(file);
-        if (qrInfo == null) {
+    public static String ExplainQrCodes() {                                                      //用于读取图片，解释二维码的信息
+        File file = new File(TakePhotoThread.path);                                              //获取图片路径
+        String qrInfo = new CreateParseCode().parseCode(file);                                   //提取二维码的信息
+        if (qrInfo == null) {                                                                    //二维码信息为空
             System.out.println("Information : (" + qrInfo + ") 这个二维码无法识别!");
             return null;
-        } else if (qrInfo.indexOf("二维码预约系统") != 0) {
+        } else if (qrInfo.indexOf("二维码预约系统") != 0) {                                       //二维码不属于系统
             System.out.println("Information : (" + qrInfo + ") 这个二维码不属于本系统!");
             return null;
         }
 
-        String reservationID = qrInfo.substring("二维码预约系统".length());
+        String reservationID = qrInfo.substring("二维码预约系统".length());                        //获取预约ID
         try {
-            Integer.parseInt(reservationID);
+            Integer.parseInt(reservationID);                                                     //转换成int型
         } catch (NumberFormatException exception) {
             System.out.println("Information : (" + qrInfo + ") 错误的二维码!");
             return null;
@@ -43,7 +43,7 @@ public class VerifyMain {
         return reservationID;
     }
 
-    public static boolean CheckTime(String reservationID) {
+    public static boolean CheckTime(String reservationID) {                                      //检测预约ID的时间是否为当前事前内
         ReservationMessage reservationMessage = new ReservationMessage(reservationID);
         Time reservationTime = reservationMessage.time;
 
@@ -69,10 +69,10 @@ public class VerifyMain {
         return false;
     }
 
-    public static void OpenDoor(GpioPinDigitalOutput doorController) {
-        doorController.setState(PinState.LOW);
+    public static void OpenDoor(GpioPinDigitalOutput doorController) {                           //开门函数
+        doorController.setState(PinState.LOW);                                                   //设置低电平断电
         try {
-            Thread.sleep(5000);
+            Thread.sleep(5000);                                                                  //停留5秒
         } catch (InterruptedException exception) {
             exception.printStackTrace();
         } finally {
@@ -82,10 +82,10 @@ public class VerifyMain {
     
     public static void main(String[] args) {
         boolean isSuccess;
-        TakePhotoThread takePhotoThread = new TakePhotoThread();
-        WechatListenThread wechatListenThread = new WechatListenThread();
-        ButtonListenThread buttonListenThread = new ButtonListenThread();
-        wechatListenThread.start();
+        TakePhotoThread takePhotoThread = new TakePhotoThread();                                 //创建拍照线程
+        WechatListenThread wechatListenThread = new WechatListenThread();                        //创建微信开门线程
+        ButtonListenThread buttonListenThread = new ButtonListenThread();                        //创建按钮开门监听器
+
         final GpioController gpioController = GpioFactory.getInstance();
         final GpioPinDigitalOutput doorController = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyControl", PinState.HIGH);
         final GpioPinDigitalInput buttonController = gpioController.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_DOWN);
@@ -95,8 +95,9 @@ public class VerifyMain {
         buttonController.addListener(buttonListenThread);
 
         takePhotoThread.start();
+        wechatListenThread.start();
         while (true) {
-            isSuccess = takePhotoThread.threadRunning;
+            isSuccess = takePhotoThread.threadRunning;                                           //如果拍照线程正在运行
             if (!isSuccess) {
                 System.out.println("Error : System hava a error in take photo !");
                 continue;
@@ -104,7 +105,7 @@ public class VerifyMain {
 
             String reservationID = ExplainQrCodes();
             if (reservationID != null) {
-                isSuccess = CheckTime(reservationID);
+                isSuccess = CheckTime(reservationID);                                            //检测时间是否正确
                 if (isSuccess) {
                     System.out.println("Information : (" + reservationID + ") Open the door !");
                     OpenDoor(doorController);

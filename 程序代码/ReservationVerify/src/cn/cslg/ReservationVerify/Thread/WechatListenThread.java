@@ -11,7 +11,7 @@ public class WechatListenThread extends Thread {
         this.open = false;
     }
 
-    public int getIndexOpen() {
+    public int getIndexOpen() {                                              //获取还有多少次开门机会
         DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
         String sql = "SELECT * FROM Open;";
         DBMySQLConnection.getPstmt(sql);
@@ -30,7 +30,7 @@ public class WechatListenThread extends Thread {
         return index;
     }
 
-    public void freeIndexOpen() {
+    public void freeIndexOpen() {                                            //开门一次
         int index = this.getIndexOpen();
         if (index <= 0) {
             return ;
