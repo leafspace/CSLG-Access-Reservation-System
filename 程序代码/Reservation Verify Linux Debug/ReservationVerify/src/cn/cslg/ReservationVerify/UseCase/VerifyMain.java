@@ -5,11 +5,15 @@ import cn.cslg.ReservationVerify.ServerBean.DBMySQLConnection;
 import cn.cslg.ReservationVerify.ServerBean.ReservationMessage;
 import cn.cslg.ReservationVerify.ServerBean.Time;
 
+import com.pi4j.io.gpio.GpioPinDigitalInput;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 import java.io.*;
 import java.sql.ResultSet;
@@ -124,6 +128,19 @@ public class VerifyMain {
         return index;
     }
     
+    public static void addIndexOpen() {
+    	int index = getIndexOpen();
+    	if (index <= 0) {
+    		return ;
+    	}
+    	index++;
+    	DBMySQLConnection DBMySQLConnection = new DBMySQLConnection();
+        String sql = "UPDATE Open SET `index` = " + index + ";";
+        DBMySQLConnection.getPstmt(sql);
+        DBMySQLConnection.update();
+        DBMySQLConnection.allClose();
+    }
+    
     public static void freeIndexOpen() {
     	int index = getIndexOpen();
     	if (index <= 0) {
@@ -139,9 +156,20 @@ public class VerifyMain {
     
     public static void main(String[] args) {
         boolean isSuccess = true;
+        
         final GpioController gpioController = GpioFactory.getInstance();
         final GpioPinDigitalOutput doorController = gpioController.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyControl", PinState.HIGH);
+        final GpioPinDigitalInput buttonController = gpioController.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_DOWN);
         doorController.setShutdownOptions(true, PinState.LOW);
+        buttonController.setShutdownOptions(true);
+        buttonController.addListener(new GpioPinListenerDigital() {
+            @Override
+            public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+            	//addIndexOpen();
+            	System.out.println("Information : Button Open the door !");
+            	OpenDoor(doorController);
+            }
+        });
         
         while (true) {
             isSuccess = TakePhoto();
